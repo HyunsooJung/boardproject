@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 데이터베이스 컬럼명 A_COLUMN을 CamelCase형태의 자바 프로퍼트로 매핑 aColumn -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<typeAliases>
+		<!-- type별칭 VO이름을 간략히 사용 -->
+		<typeAlias type="com.myproject.myboard.board.BoardVO" alias="BoardVO" />
+		<typeAlias type="com.myproject.myboard.member.MemberVO" alias="MemberVO" />
+	</typeAliases>
+
+</configuration>

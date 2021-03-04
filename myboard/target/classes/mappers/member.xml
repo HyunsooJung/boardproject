@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<!-- 유저 등록 -->
+	<insert id="doInsert" parameterType="MemberVO">
+	INSERT INTO test.members (
+		MEMBER_ID, 
+		MEMBER_PW, 
+		NAME, 
+		AUTH)
+	VALUES (
+		#{memberId}, 
+		#{memberPw}, 
+		#{name}, 
+		#{auth}
+	)
+	</insert>
+
+	<!-- 유저 삭제 -->
+	<delete id="doDelete" parameterType="MemberVO">
+		DELETE 
+		FROM test.members
+		WHERE MEMBER_ID=#{memberId}		
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="doUpdate" parameterType="MemberVO">
+		UPDATE test.members
+		SET MEMBER_PW=#{memberPw}
+		WHERE MEMBER_ID=#{memberId};		
+	</update>
+	
+	<select id="doSelectOne" parameterType="MemberVO" resultType="MemberVO">
+		SELECT MEMBER_ID, 
+			   MEMBER_PW, 
+			   NAME, 
+			   AUTH
+		FROM test.members
+		WHERE MEMBER_ID=#{memberId}	
+		
+	</select>
+	
+	<select id="doSelectList" parameterType="MemberVO" resultType="MemberVO"> 
+		SELECT *
+		FROM   MEMBER
+		WHERE  AUTH = #{auth}
+	</select> 
+</mapper>

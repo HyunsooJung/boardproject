@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myproject.myboard.board">
+	 
+	<!-- 게시물 등록 -->
+	<insert id="doInsert" parameterType="BoardVO">
+		INSERT INTO test.board (
+			TITLE, 
+			CONTENTS, 
+			REG_ID, 
+			REG_DT
+		)
+		VALUES ( 
+			#{title}, 
+			#{contents}, 
+			#{regId}, 
+			now()
+		)		
+	</insert>
+	
+	<!--게시물 삭제 -->
+	<delete id="doDelete" parameterType="BoardVO">
+		<![CDATA[
+		DELETE FROM test.board
+		WHERE SEQ=#{seq};
+		]]>	
+	</delete>
+	
+	<!-- 게시물 수정 -->
+	<update id="doUpdate" parameterType="BoardVO">
+		UPDATE test.board
+		SET TITLE=#{title}, 
+			CONTENTS=#{contents}, 
+			VIEWS=#{views}, 
+			MOD_ID=#{modId}, 
+			MOD_DT=SYSDATE
+		WHERE SEQ=#{seq};
+	
+	</update>
+	
+	<!-- 게시물 단건조회 -->
+	<select id="doSelectOne" parameterType="BoardVO" resultType="BoardVO">
+	SELECT SEQ, 
+		   TITLE, 
+		   CONTENTS, 
+		   VIEWS, 
+		   REG_ID, 
+		   REG_DT, 
+		   MOD_ID, 
+		   MOD_DT
+	FROM test.board
+	WHERE SEQ=#{seq}
+	
+	</select>
+
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM test.board
+	</select>
+	
+	<!-- 게시물 목록 -->
+	<select id="doSelectList"  resultType="BoardVO">
+	SELECT *
+		FROM (
+				SELECT ROWNUM RN, A.*
+				FROM(
+					SELECT *
+					FROM test.board
+					ORDER BY SEQ DESC
+					) A
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+</mapper>
