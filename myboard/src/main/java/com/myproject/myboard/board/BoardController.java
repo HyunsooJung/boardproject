@@ -106,6 +106,19 @@ public class BoardController {
 		return flag;
 	}
 	
+	@RequestMapping(value="board/doUpdatePage.do", method = RequestMethod.POST)
+	public ModelAndView doUpdatePage(BoardVO boardVO) {
+		
+		System.out.println(boardVO.getSeq());
+		BoardVO outVO = boardServiceImpl.doSelectOne(boardVO);
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("outVO", outVO);
+		mav.setViewName("board/board_mod");
+		
+		return mav;
+	}
+	
 	/**
 	 * 게시물 수정
 	 * @param boardVO

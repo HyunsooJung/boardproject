@@ -107,7 +107,6 @@
 	<script type="text/javascript">
 	
 	$(write_btn).on("click",function(){
-		alert("성공");
 		window.location.href="${hContext}/board/doInsertView.do"
 	});
 	

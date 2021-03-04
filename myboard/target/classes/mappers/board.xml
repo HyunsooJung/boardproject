@@ -22,7 +22,7 @@
 	<delete id="doDelete" parameterType="BoardVO">
 		<![CDATA[
 		DELETE FROM test.board
-		WHERE SEQ=#{seq};
+		WHERE SEQ=#{seq}
 		]]>	
 	</delete>
 	
@@ -30,11 +30,11 @@
 	<update id="doUpdate" parameterType="BoardVO">
 		UPDATE test.board
 		SET TITLE=#{title}, 
-			CONTENTS=#{contents}, 
-			VIEWS=#{views}, 
+			CONTENTS=#{contents},
+			REG_DT=now(), 
 			MOD_ID=#{modId}, 
 			MOD_DT=now()
-		WHERE SEQ=#{seq};
+		WHERE SEQ=#{seq}
 	
 	</update>
 	
