@@ -1,5 +1,8 @@
 package com.myproject.myboard.cmn;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PageVO {
 	
 	//현재페이지

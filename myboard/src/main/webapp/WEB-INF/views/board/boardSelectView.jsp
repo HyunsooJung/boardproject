@@ -15,26 +15,26 @@
 		<div >
 			<label>제목</label>
 			<div>
-				<input type="text" class="form-control" id="title" name="title" var="${outVO.title }" readonly="readonly"/>				
+				<input type="text" class="form-control" id="title" name="title" value="${outVO.title }" readonly="readonly"/>				
 			</div>
 		</div>
 		<div >
 			<label>작성자</label>
 			<div>
-				<input type="text" id="regId" name="regId" var="${outVO.regId }" readonly="readonly"/>				
+				<input type="text" id="regId" name="regId" value="${outVO.regId }" readonly="readonly"/>				
 			</div>
 		</div>
 		<div >
 			<label>내용</label>
 			<div>
-				<textarea  id="contents" name="contents" var="${outVO.contents }" readonly="readonly" ></textarea>				
+				<textarea  id="contents" name="contents" readonly="readonly" >${outVO.contents }</textarea>				
 			</div>
 		</div>
 		<div>
 			<button type="button" id="list_btn" name="list_btn">목록</button>
 		</div>
 		<div>
-			<button type="button" id="create_btn" name="create_btn">수정</button>
+			<button type="button" id="mod_btn" name="mod_btn">수정</button>
 		</div>
 		<div>
 			<button type="button" id="delete_btn" name="delete_btn">삭제</button>
@@ -43,6 +43,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 	
+	//삭제 이벤트
 	$(delete_btn).on("click",function(){
 		alert("삭제하시겠습니까?");
 		$.ajax({
@@ -50,14 +51,14 @@
 			url:"${hContext}/board/doDelete.do",
 			dataType:"html",
 			data:{
-				"seq":2,
+				"seq":${outVO.seq},
 				"title" : $("#title").val(),
 				"contents" : $("#contents").val(),
 				"regId" : $("#regId").val()
 			},
 			success:function(data){
-				alert("삭제완료");
-				location.reload();
+				alert("삭제되었습니다");
+				window.location.href="${hContext}/board/doSelectList.do"
 			},
 			error:function(xhr,status,error){
 				alert("error:"+error);
@@ -66,7 +67,15 @@
 	});
 	});
 	
+	//수정 이벤트
+	$(mod_btn).on("click",function(){
+		alert("A");
+	});
 	
+	//목록화면으로 넘기기
+	$(list_btn).on("click",function(){
+		window.location.href="${hContext}/board/doSelectList.do"
+	});
 	</script>
 </body>
 </html>

@@ -14,14 +14,103 @@
 	h2{
 		text-align: center;
 	}
-	table
+	table{
+		width: 100%;
+	}
+	#outter {
+		display: block;
+		width: 60%;
+		margin: auto;
+	}
+	a{
+		text-decoration: none;
+	}
 </style>
+<script type="text/javascript">
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href = "${hContext}/board/doSelectList.do?nowPage=${pageVO.nowPage}&cntPerPage="+sel;
+	}
+</script>
 </head>
 <body>
+<h2>게시판</h2>
+
 	<div id="outter">
+		<!-- 옵션선택 -->
 		<div style="float: right;">
+			<select id="cntPerPage" name="sel" onchange="selChange()">
+				<option value="5"
+					<c:if test="${pageVO.cntPerPage == 5}">selected</c:if>>
+					5줄보기
+				</option>
+				<option value="10"
+					<c:if test="${pageVO.cntPerPage == 10}">selected</c:if>>
+					10줄보기
+				</option>
+				<option value="15"
+					<c:if test="${pageVO.cntPerPage == 15}">selected</c:if>>
+					15줄보기
+				</option>
+				<option value="20"
+					<c:if test="${pageVO.cntPerPage == 20}">selected</c:if>>
+					20줄보기
+				</option>
+			</select>
+		</div>
+		<!-- 옵션선택 끝 -->
+		<table border="1">
+			<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>등록일</th>
+				<th>조회수</th>
+			</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${outVO}" var="list">
+				<tr>
+					<td>${list.seq }</td>
+					<td><a href='${hContext}/board/doSelectOne.do?seq=${list.seq }' > ${list.title }</a></td>
+					<td>${list.regId }</td>
+					<td>${list.regDt }</td>
+					<td>${list.views }</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+		<input type="button" value="글쓰기" style="float: right;" id="write_btn"><br>
 		
+		<div style="display: block; text-align: center;" >
+			<c:if test="${pageVO.startPage != 1 }">
+				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.startPage - 1}&cntPerPage=${pageVO.cntPerPage}">&lt;</a>
+			</c:if>
+			<c:forEach begin="${pageVO.startPage }" end="${pageVO.endPage }" var="p" >
+				<c:choose>
+					<c:when test="${p == pageVO.nowPage }">
+						<b>${p }</b>
+					</c:when>
+					<c:when test="${p != pageVO.nowPage }">
+						<a href="${hContext}/board/doSelectList.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage } " >${p}</a>
+					</c:when>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${pageVO.endPage != pageVO.lastPage }">
+				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage } " >&gt;</a>	
+			</c:if>
 		</div>
 	</div>
+	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	$(write_btn).on("click",function(){
+		alert("성공");
+		window.location.href="${hContext}/board/doInsertView.do"
+	});
+	
+	</script>
 </body>
 </html>

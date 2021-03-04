@@ -11,6 +11,7 @@
 		<!-- type별칭 VO이름을 간략히 사용 -->
 		<typeAlias type="com.myproject.myboard.board.BoardVO" alias="BoardVO" />
 		<typeAlias type="com.myproject.myboard.member.MemberVO" alias="MemberVO" />
+		<typeAlias type="com.myproject.myboard.cmn.PageVO" alias="PageVO" />
 	</typeAliases>
 
 </configuration>

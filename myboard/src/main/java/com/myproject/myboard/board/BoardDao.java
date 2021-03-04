@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -16,6 +18,7 @@ import com.myproject.myboard.cmn.PageVO;
 
 @Repository("BoardDao")
 public class BoardDao {
+	final static Logger LOG = LoggerFactory.getLogger(BoardDao.class);
 	
 	@Autowired
    @Resource(name = "transactionManager")
@@ -88,7 +91,7 @@ public class BoardDao {
    public List<BoardVO> doSelectList(PageVO pageVO) {
 		String statement = NAMESPACE + ".doSelectList";
 		List<BoardVO> outVO = sqlSession.selectList(statement,pageVO);
-
+		LOG.debug("outVO list="+outVO);
 		return outVO;
 	}
    

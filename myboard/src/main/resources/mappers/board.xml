@@ -33,21 +33,21 @@
 			CONTENTS=#{contents}, 
 			VIEWS=#{views}, 
 			MOD_ID=#{modId}, 
-			MOD_DT=SYSDATE
+			MOD_DT=now()
 		WHERE SEQ=#{seq};
 	
 	</update>
 	
 	<!-- 게시물 단건조회 -->
 	<select id="doSelectOne" parameterType="BoardVO" resultType="BoardVO">
-	SELECT SEQ, 
-		   TITLE, 
-		   CONTENTS, 
-		   VIEWS, 
-		   REG_ID, 
-		   REG_DT, 
-		   MOD_ID, 
-		   MOD_DT
+	SELECT SEQ , 
+		   TITLE AS title, 
+		   CONTENTS AS contents, 
+		   VIEWS AS views, 
+		   REG_ID AS regId, 
+		   REG_DT AS regDt, 
+		   MOD_ID AS modId, 
+		   MOD_DT AS modDt
 	FROM test.board
 	WHERE SEQ=#{seq}
 	
@@ -59,16 +59,18 @@
 	</select>
 	
 	<!-- 게시물 목록 -->
-	<select id="doSelectList"  resultType="BoardVO">
-	SELECT *
+	<select id="doSelectList" parameterType="PageVO" resultType="BoardVO">
+	SELECT B.*
 		FROM (
-				SELECT ROWNUM RN, A.*
+				SELECT ROW_NUMBER() OVER (order by A.seq DESC) as  RN, A.*
 				FROM(
 					SELECT *
 					FROM test.board
 					ORDER BY SEQ DESC
 					) A
-		)
+		)B
+	<![CDATA[
 	WHERE RN BETWEEN #{start} AND #{end}
+	]]>
 	</select>
 </mapper>
