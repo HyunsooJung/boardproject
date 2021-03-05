@@ -66,6 +66,15 @@ public class MemberController {
 	}
 	
 	/**
+	 * 회원정보수정페이지 넘기기전,탈퇴 페이지
+	 * @return
+	 */
+	@RequestMapping(value="member/memberConfirmPage.do", method = RequestMethod.GET)
+	public String memberConfirm() {
+		return "member/memberConfirm";
+	}
+	
+	/**
 	 * 유저 정보수정 페이지
 	 * @return
 	 */
