@@ -24,10 +24,18 @@ public class PageVO {
 	
 	public int cntPage = 5;
 	
+	public String searchWord;
+	
+	public String searchOption;
+	
 	public PageVO() {
 		super();
 	}
 
+	public PageVO(String searchWord) {
+		
+	}
+	
 	public PageVO(int nowPage, int total, int cntPerPage) {
 		setNowPage(nowPage);
 		setCntPerPage(cntPerPage);
@@ -60,6 +68,22 @@ public class PageVO {
 		setStart(getEnd() - cntPerPage + 1);
 	}
 	
+	public String getSearchOption() {
+		return searchOption;
+	}
+
+	public void setSearchOption(String searchOption) {
+		this.searchOption = searchOption;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
+	}
+
 	public int getNowPage() {
 		return nowPage;
 	}
@@ -136,8 +160,8 @@ public class PageVO {
 	public String toString() {
 		return "PageVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
 				+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
-				+ ", cntPage=" + cntPage + ", toString()=" + super.toString() + "]";
+				+ ", cntPage=" + cntPage + ", searchWord=" + searchWord + ", searchOption=" + searchOption
+				+ ", toString()=" + super.toString() + "]";
 	}
-
 	
 }

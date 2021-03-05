@@ -49,6 +49,32 @@
 <h2>게시판</h2>
 
 	<div id="outter">
+		<!-- 검색 -->
+		<form action="${hContext}/board/doSelectList.do" method="post">
+		<div style="float: right;">
+			<select id="searchOption" name="searchOption">
+				<option value="regId"
+					<c:if test="${pageVO.searchOption == 'regId'}">selected</c:if>>
+					작성자
+				</option>
+				<option value="title"
+					<c:if test="${pageVO.searchOption == 'title'}">selected</c:if>>
+					제목
+				</option>
+				<option value="contents"
+					<c:if test="${pageVO.searchOption == 'contents'}">selected</c:if>>
+					내용
+				</option>
+				<option value="all"
+					<c:if test="${pageVO.searchOption == 'all'}">selected</c:if>>
+					전체
+				</option>
+			</select>
+			<input name="searchWord" value="${pageVO.searchWord}">
+    		<input type="submit" value="조회">
+		</div>
+		</form>
+		<!-- 검색 끝 -->
 		<!-- 옵션선택 -->
 		<div style="float: right;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">

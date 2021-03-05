@@ -60,17 +60,33 @@
 	</select>
 	
 	<!-- 게시물 목록 -->
-	<select id="doSelectList" parameterType="PageVO" resultType="BoardVO">
+	<select id="doSelectList" resultType="BoardVO">
 	SELECT B.*
 		FROM (
 				SELECT ROW_NUMBER() OVER (order by A.seq DESC) as  RN, A.*
 				FROM(
 					SELECT *
 					FROM test.board
+					<include refid="search" />
+					ORDER BY SEQ DESC
 					) A
 		)B
 	<![CDATA[
 	WHERE RN BETWEEN #{start} AND #{end}
 	]]>
 	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				WHERE
+					REG_ID like '%#{searchWord}%' or
+					CONTENTS like '%#{searchWord}%' or
+					TITLE like '%#{searchWord}%'
+			</when>
+			<otherwise>
+				WHERE #{searchOption} like '%#{searchWord}%'
+			</otherwise>
+		</choose>
+	</sql>
 </mapper>

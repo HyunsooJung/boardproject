@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import com.myproject.myboard.cmn.PageVO;
 
 @Controller
 public class BoardController {
+	final static Logger LOG = LoggerFactory.getLogger(BoardController.class);
+	
 	@Autowired
 	BoardServiceImpl boardServiceImpl;
 	
@@ -60,6 +64,8 @@ public class BoardController {
 	@RequestMapping(value="board/doSelectList.do", method = RequestMethod.GET)
 	public ModelAndView doSelectList(@RequestParam(value="nowPage", required=false)String nowPage,
 									 @RequestParam(value="cntPerPage", required=false)String cntPerPage,
+									 @RequestParam (defaultValue="regId") String searchOption,
+									 @RequestParam (defaultValue="") String searchWord ,
 									 PageVO pageVO) {
 		ModelAndView mav = new ModelAndView();
 		int total = boardServiceImpl.count();
@@ -75,6 +81,11 @@ public class BoardController {
 			cntPerPage="5";
 		}
 		pageVO = new PageVO(Integer.parseInt(nowPage),total, Integer.parseInt(cntPerPage));
+		pageVO.setSearchOption(searchOption);
+		pageVO.setSearchWord(searchWord);
+		LOG.debug("searchOption:"+searchOption);
+		LOG.debug("searchWord:"+searchWord);
+		LOG.debug("pageVO:"+pageVO);
 		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
 		
 		

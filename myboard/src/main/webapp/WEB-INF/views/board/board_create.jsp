@@ -42,13 +42,11 @@
 		<div >
 			<label>내용</label>
 			<div>
-				<textarea  id="contents" name="contents" ></textarea>				
+				<textarea style="width:400px; height:200px; margin:5px;" id="contents" name="contents" ></textarea>				
 			</div>
 		</div>
 		<div>
 			<button type="button" id="list_btn" name="list_btn">목록</button>
-		</div>
-		<div>
 			<button type="button" id="create_btn" name="create_btn">등록</button>
 		</div>
 	
@@ -58,6 +56,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 	
+	//목록페이지 이동 이벤트
+	$("#list_btn").on("click", function(){
+		window.location.href="${hContext}/board/doSelectList.do";
+	});
+	
+	//글쓰기 버튼 이벤트
 	$("#create_btn").on("click",function(){
 		var title = $("#title").val();
 		if(null == title || title.trim().length==0){
