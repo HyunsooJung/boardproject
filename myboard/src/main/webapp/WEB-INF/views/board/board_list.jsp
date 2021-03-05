@@ -8,7 +8,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
 <title>게시판</title>
 <style>
 	h2{
@@ -25,6 +32,10 @@
 	a{
 		text-decoration: none;
 	}
+	
+	body{
+		padding-top:200px;
+	}
 </style>
 <script type="text/javascript">
 	function selChange() {
@@ -34,6 +45,7 @@
 </script>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 <h2>게시판</h2>
 
 	<div id="outter">
@@ -73,7 +85,7 @@
 			<c:forEach items="${outVO}" var="list">
 				<tr>
 					<td>${list.seq }</td>
-					<td><a href='${hContext}/board/doSelectOne.do?seq=${list.seq }' > ${list.title }</a></td>
+					<td><a <c:if test="${null != sessionScope.MemberVO }">href='${hContext}/board/doSelectOne.do?seq=${list.seq }' </c:if>> ${list.title }</a></td>
 					<td>${list.regId }</td>
 					<td>${list.regDt }</td>
 					<td>${list.views }</td>
@@ -104,6 +116,8 @@
 	</div>
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
 	$("#write_btn").on("click",function(){

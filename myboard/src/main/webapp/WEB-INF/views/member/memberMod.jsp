@@ -6,7 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+	<style>
+		body{
+			padding-top:200px;
+		}
+	</style>
 <title>회원정보 수정</title>
 </head>
 <body>
@@ -50,6 +62,8 @@
 	</article>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
 	//모든 공백 체크 정규식

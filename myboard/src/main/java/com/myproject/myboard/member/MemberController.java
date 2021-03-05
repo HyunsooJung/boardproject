@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +16,6 @@ import com.google.gson.Gson;
 
 @Controller
 public class MemberController {
-	final static Logger LOG = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	MemberServiceImpl memberServiceImpl;
@@ -95,6 +92,17 @@ public class MemberController {
 	}
 	
 	/**
+	 * 로그아웃
+	 * @return
+	 */
+	@RequestMapping(value="member/logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:/board/doSelectList.do";
+	}
+	
+	/**
 	 * 회원가입 페이지
 	 * @param req
 	 * @param res
@@ -113,9 +121,6 @@ public class MemberController {
 	@RequestMapping(value="member/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
 	public int doInsert(MemberVO memberVO) {
-		LOG.debug("memberid: " +memberVO.getMemberId());
-		LOG.debug("memberpw: " +memberVO.getMemberPw());
-		LOG.debug("member name: " +memberVO.getName());
 		int flag= memberServiceImpl.doInsert(memberVO);
 		
 		return flag;
@@ -146,7 +151,6 @@ public class MemberController {
 		
 		int flag = memberServiceImpl.doUpdate(memberVO);
 		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
-		LOG.debug("update outVO= " +outVO);
 		if(flag==1) {
 			httpSession.setAttribute("MemberVO", outVO);
 		}

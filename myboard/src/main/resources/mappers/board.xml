@@ -33,7 +33,8 @@
 			CONTENTS=#{contents},
 			REG_DT=now(), 
 			MOD_ID=#{modId}, 
-			MOD_DT=now()
+			MOD_DT=now(),
+			VIEWS=#{views}
 		WHERE SEQ=#{seq}
 	
 	</update>

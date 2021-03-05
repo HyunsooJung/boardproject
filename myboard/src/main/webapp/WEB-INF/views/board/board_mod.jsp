@@ -8,10 +8,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			padding-top:200px;
+		}
+	</style>
 <title>게시판 수정</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 <section>
 	<div class="container">
 	
@@ -30,14 +42,12 @@
 		<div >
 			<label>내용</label>
 			<div>
-				<textarea  id="contents" name="contents" >${outVO.contents }</textarea>				
+				<textarea style="width:400px; height:200px; margin:5px;" id="contents" name="contents" >${outVO.contents }</textarea>				
 			</div>
 		</div>
 		<div>
-			<button type="button" id="list_btn" name="list_btn">목록</button>
-		</div>
-		<div>
-			<button type="button" id="modify_btn" name="modify_btn">수정</button>
+			<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="목록" id="list_btn" >
+			<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="modify_btn" >
 		</div>
 	
 	</div>

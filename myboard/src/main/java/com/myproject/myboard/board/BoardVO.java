@@ -4,7 +4,7 @@ public class BoardVO {
 	private int seq; //순번
 	private String title; //제목
 	private String contents; //내용
-	private String views; //조회수
+	private int views; //조회수
 	private String regId; //작성자
 	private String regDt; //작성일
 	private String modId; //수정자
@@ -13,7 +13,7 @@ public class BoardVO {
 	public BoardVO() {
 	}
 
-	public BoardVO(int seq, String title, String contents, String views, String regId, String regDt, String modId,
+	public BoardVO(int seq, String title, String contents, int views, String regId, String regDt, String modId,
 			String modDt) {
 		super();
 		this.seq = seq;
@@ -50,11 +50,11 @@ public class BoardVO {
 		this.contents = contents;
 	}
 
-	public String getViews() {
+	public int getViews() {
 		return views;
 	}
 
-	public void setViews(String views) {
+	public void setViews(int views) {
 		this.views = views;
 	}
 
@@ -96,5 +96,6 @@ public class BoardVO {
 				+ regId + ", regDt=" + regDt + ", modId=" + modId + ", modDt=" + modDt + ", toString()="
 				+ super.toString() + "]";
 	}
+
 	
 }

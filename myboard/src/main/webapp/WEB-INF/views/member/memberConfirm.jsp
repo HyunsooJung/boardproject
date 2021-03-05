@@ -6,10 +6,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			padding-top:200px;
+		}
+	</style>
 <title>회원 수정, 탈퇴</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 	<div style="text-align: center;" class="container">
 		<h1>회원 수정, 탈퇴</h1>
 		<hr>

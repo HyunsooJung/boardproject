@@ -8,10 +8,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			padding-top:200px;
+		}
+	</style>
 <title>게시판</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 	<section>
 	<div class="container">
 	
@@ -24,7 +36,7 @@
 		<div >
 			<label>작성자</label>
 			<div>
-				<input type="text" id="regId" name="regId" value="jhs" readonly="readonly"/>				
+				<input type="text" id="regId" name="regId" value="${sessionScope.MemberVO.getMemberId()}" readonly="readonly"/>				
 			</div>
 		</div>
 		<div >
@@ -47,7 +59,6 @@
 	<script type="text/javascript">
 	
 	$("#create_btn").on("click",function(){
-		alert("a");
 		var title = $("#title").val();
 		if(null == title || title.trim().length==0){
 			$("#title").focus();
@@ -72,7 +83,7 @@
 				},
 				success:function(data){
 					alert("등록완료");
-					location.reload();
+					window.location.href="${hContext}/board/doSelectList.do";
 				},
 				error:function(xhr,status,error){
 					alert("error:"+error);

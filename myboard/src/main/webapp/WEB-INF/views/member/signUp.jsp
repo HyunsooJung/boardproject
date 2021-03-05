@@ -6,10 +6,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body{
+			padding-top:200px;
+		}
+	</style>
 <title>회원가입</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 	<article class="container">
 		<div class="page-header">
 			<div class="col-md-6 col-md-offset-3">
@@ -43,7 +55,7 @@
 				</div>
 				<br>
 				<br>
-				<input style="width:300px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="회원가입" id="signupBtn">
+				<input style="width:300px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="회원가입" id="signupBtn">
 			</form>		
 		</div>
 	</article>
@@ -145,7 +157,6 @@
 	
 	//회원가입 버튼 이벤트
 	$("#signupBtn").on("click",function(){
-		alert("sign");
 		var chk_Arr = new Array(3).fill(false);
 		//아이디 정규식
 		if(idJ.test($("#inputId").val())){

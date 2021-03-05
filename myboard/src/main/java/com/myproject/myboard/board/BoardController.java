@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +19,6 @@ import com.myproject.myboard.cmn.PageVO;
 
 @Controller
 public class BoardController {
-	final static Logger LOG = LoggerFactory.getLogger(BoardController.class);
-	
 	@Autowired
 	BoardServiceImpl boardServiceImpl;
 	
@@ -48,11 +44,13 @@ public class BoardController {
 	@RequestMapping(value="board/doSelectOne.do", method = RequestMethod.GET)
 	public ModelAndView doSelectOne(@RequestParam("seq") int seq,BoardVO boardVO) {
 		ModelAndView mav = new ModelAndView();
-		LOG.debug("boardVO boardVO:  "+boardVO);
-		LOG.debug("selectone seq:  "+seq);
 		boardVO.setSeq(seq);
+		
 		BoardVO outVO = boardServiceImpl.doSelectOne(boardVO);
-		LOG.debug("selectone outVO:  "+outVO);
+
+		outVO.setViews(outVO.getViews()+1);
+		int flag = boardServiceImpl.doUpdate(outVO);
+
 		mav.addObject("outVO", outVO);
 		mav.setViewName("board/boardSelectView");
 		
@@ -64,7 +62,6 @@ public class BoardController {
 									 @RequestParam(value="cntPerPage", required=false)String cntPerPage,
 									 PageVO pageVO) {
 		ModelAndView mav = new ModelAndView();
-		LOG.debug("controller pageVO: "+pageVO);
 		int total = boardServiceImpl.count();
 		
 		if(nowPage == null && cntPerPage ==null) {
@@ -77,11 +74,8 @@ public class BoardController {
 		else if(cntPerPage == null) {
 			cntPerPage="5";
 		}
-		LOG.debug("controller pageVO111: "+pageVO);
 		pageVO = new PageVO(Integer.parseInt(nowPage),total, Integer.parseInt(cntPerPage));
-		LOG.debug("controller pageVO222: "+pageVO);
 		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
-		LOG.debug("controller outVO: "+outVO);
 		
 		
 		mav.addObject("pageVO", pageVO);
