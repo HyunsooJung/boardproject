@@ -1,6 +1,5 @@
 package com.myproject.myboard.board;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;

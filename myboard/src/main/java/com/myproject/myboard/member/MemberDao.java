@@ -20,7 +20,20 @@ public class MemberDao {
 	@Resource(name = "sqlSession")
 	private SqlSessionTemplate sqlSession;
 	
-	final String NAMESPACE = "member";
+	final String NAMESPACE = "com.myproject.myboard.member";
+	
+	/**
+	 * 아이디 체크
+	 * @param memberVO
+	 * @return
+	 */
+	public int doMemberIdChk(MemberVO memberVO) {
+		String statement = NAMESPACE + ".doMemberIdChk";
+		
+		int flag = sqlSession.selectOne(statement, memberVO);
+		
+		return flag;
+	}
 	
 	/**
 	 * 회원등록

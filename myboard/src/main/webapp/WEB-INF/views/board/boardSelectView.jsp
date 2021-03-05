@@ -48,7 +48,7 @@
 	<script type="text/javascript">
 	
 	//삭제 이벤트
-	$(delete_btn).on("click",function(){
+	$("#delete_btn").on("click",function(){
 		if(false==confirm("삭제 하시겠습니까?"))return; 
 		$.ajax({
 			type:"POST",
@@ -72,14 +72,14 @@
 	});
 	
 	//수정페이지이동 이벤트
-	$(mod_btn).on("click",function(){
+	$("#mod_btn").on("click",function(){
 		$("#modForm").attr('action', '${hContext}/board/doUpdatePage.do');
 		$("#modForm").submit();
 	});
 	
 	
 	//목록화면으로 넘기기
-	$(list_btn).on("click",function(){
+	$("#list_btn").on("click",function(){
 		window.location.href="${hContext}/board/doSelectList.do";
 	});
 	</script>

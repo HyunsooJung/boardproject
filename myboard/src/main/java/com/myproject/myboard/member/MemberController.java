@@ -2,6 +2,12 @@ package com.myproject.myboard.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +18,74 @@ import com.google.gson.Gson;
 
 @Controller
 public class MemberController {
-
+	final static Logger LOG = LoggerFactory.getLogger(MemberController.class);
+	
 	@Autowired
 	MemberServiceImpl memberServiceImpl;
+	
+	/**
+	 * 로그인
+	 * @param memberVO
+	 * @return
+	 */
+	@RequestMapping(value="member/doLogin.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int doLogin(HttpServletRequest req, MemberVO memberVO) {
+		HttpSession httpSession = req.getSession();
+		
+		int flag=0;
+		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+		
+		try {
+			if(!outVO.getMemberPw().equals(memberVO.getMemberPw())) {
+				flag = 2;
+			}
+			else {
+				flag=1;
+				httpSession.setAttribute("MemberVO", outVO);
+			}
+		} catch (NullPointerException e) {
+			flag=3;
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * 아이디 체크
+	 * @param memberVO
+	 * @return
+	 */
+	@RequestMapping(value="member/doMemberIdChk.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int doMemberIdChk(MemberVO memberVO) {
+		
+		int flag = memberServiceImpl.doMemberIdChk(memberVO);
+		
+		return flag;
+	}
+	
+	/**
+	 * 로그인 페이지
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	@RequestMapping(value="member/loginPage.do", method = RequestMethod.GET)
+	public String login(HttpServletRequest req, HttpServletResponse res) {
+		return "member/login";
+	}
+	
+	/**
+	 * 회원가입 페이지
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	@RequestMapping(value="member/signUpPage.do", method = RequestMethod.GET)
+	public String signUp(HttpServletRequest req, HttpServletResponse res) {
+		return "member/signUp";
+	}
 	
 	/**
 	 * 회원등록
@@ -24,6 +95,9 @@ public class MemberController {
 	@RequestMapping(value="member/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
 	public int doInsert(MemberVO memberVO) {
+		LOG.debug("memberid: " +memberVO.getMemberId());
+		LOG.debug("memberpw: " +memberVO.getMemberPw());
+		LOG.debug("member name: " +memberVO.getName());
 		int flag= memberServiceImpl.doInsert(memberVO);
 		
 		return flag;

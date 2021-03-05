@@ -106,7 +106,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript">
 	
-	$(write_btn).on("click",function(){
+	$("#write_btn").on("click",function(){
 		window.location.href="${hContext}/board/doInsertView.do"
 	});
 	

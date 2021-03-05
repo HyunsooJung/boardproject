@@ -9,4 +9,5 @@ public interface MemberService {
 	public int doUpdate(MemberVO memberVO);
 	public MemberVO doSelectOne(MemberVO memberVO);
 	public List<MemberVO> doSelectList(MemberVO memberVO);
+	public int doMemberIdChk(MemberVO memberVO);
 }
