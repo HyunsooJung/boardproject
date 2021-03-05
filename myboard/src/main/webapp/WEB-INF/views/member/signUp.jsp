@@ -17,7 +17,7 @@
 			</div>
 		</div>
 		<div class="col-sm6 col-md-offset-3">
-			<form action="doInsert.do" method="post" role="form" id="signupFrom" name="signupForm" >
+			<form action="doInsert.do" method="post" role="form" id="signupForm" name="signupForm" >
 				<div class="form-group">
 					<label for="inputId">아이디</label>
 					<input type="text" class="form-control" id="inputId" name="inputId" placeholder="ID">

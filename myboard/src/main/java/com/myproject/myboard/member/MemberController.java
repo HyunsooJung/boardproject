@@ -66,6 +66,15 @@ public class MemberController {
 	}
 	
 	/**
+	 * 유저 정보수정 페이지
+	 * @return
+	 */
+	@RequestMapping(value="member/modPage.do", method = RequestMethod.GET)
+	public String memberMod() {
+		return "member/memberMod";
+	}
+	
+	/**
 	 * 로그인 페이지
 	 * @param req
 	 * @param res
@@ -123,8 +132,15 @@ public class MemberController {
 	 */
 	@RequestMapping(value="member/doUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doUpdate(MemberVO memberVO) {
+	public int doUpdate(MemberVO memberVO, HttpServletRequest req) {
+		HttpSession httpSession = req.getSession();
+		
 		int flag = memberServiceImpl.doUpdate(memberVO);
+		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+		LOG.debug("update outVO= " +outVO);
+		if(flag==1) {
+			httpSession.setAttribute("MemberVO", outVO);
+		}
 		
 		return flag;
 	}
