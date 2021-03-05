@@ -84,7 +84,8 @@
 			<tbody>
 			<c:forEach items="${outVO}" var="list">
 				<tr>
-					<td>${list.seq }</td>
+					<td>${list.rn }</td>
+					<div style="display: none"><c:out value="${list.seq }" /></div>
 					<td><a <c:if test="${null != sessionScope.MemberVO }">href='${hContext}/board/doSelectOne.do?seq=${list.seq }' </c:if>> ${list.title }</a></td>
 					<td>${list.regId }</td>
 					<td>${list.regDt }</td>

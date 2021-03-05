@@ -1,6 +1,7 @@
 package com.myproject.myboard.board;
 
 public class BoardVO {
+	private int rn; //화면에 나타낼 순번
 	private int seq; //순번
 	private String title; //제목
 	private String contents; //내용
@@ -13,9 +14,10 @@ public class BoardVO {
 	public BoardVO() {
 	}
 
-	public BoardVO(int seq, String title, String contents, int views, String regId, String regDt, String modId,
+	public BoardVO(int rn, int seq, String title, String contents, int views, String regId, String regDt, String modId,
 			String modDt) {
 		super();
+		this.rn = rn;
 		this.seq = seq;
 		this.title = title;
 		this.contents = contents;
@@ -24,6 +26,14 @@ public class BoardVO {
 		this.regDt = regDt;
 		this.modId = modId;
 		this.modDt = modDt;
+	}
+
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
 	}
 
 	public int getSeq() {
@@ -92,10 +102,9 @@ public class BoardVO {
 
 	@Override
 	public String toString() {
-		return "BoardVO [seq=" + seq + ", title=" + title + ", contents=" + contents + ", views=" + views + ", regId="
-				+ regId + ", regDt=" + regDt + ", modId=" + modId + ", modDt=" + modDt + ", toString()="
+		return "BoardVO [rn=" + rn + ", seq=" + seq + ", title=" + title + ", contents=" + contents + ", views=" + views
+				+ ", regId=" + regId + ", regDt=" + regDt + ", modId=" + modId + ", modDt=" + modDt + ", toString()="
 				+ super.toString() + "]";
 	}
-
 	
 }

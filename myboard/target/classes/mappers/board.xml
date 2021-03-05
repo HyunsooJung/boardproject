@@ -67,7 +67,6 @@
 				FROM(
 					SELECT *
 					FROM test.board
-					ORDER BY SEQ DESC
 					) A
 		)B
 	<![CDATA[
