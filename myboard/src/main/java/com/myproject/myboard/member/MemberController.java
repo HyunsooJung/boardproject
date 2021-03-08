@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -103,10 +105,13 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value="member/logout.do", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		session.invalidate();
+	public String logout(HttpSession session, 
+			@ModelAttribute("MemberVO") MemberVO memberVO,
+            HttpServletRequest request,
+            Model model) {
+		request.getSession().removeAttribute("MemberVO");
 		
-		return "redirect:/board/doSelectList.do";
+		return "redirect:/member/loginPage.do";
 	}
 	
 	/**

@@ -53,7 +53,7 @@
     
     <interceptors>
         <interceptor>
-            <mapping path="/board/*.do"/>
+            <mapping path="/*.do"/>
             <beans:ref bean="LoginInterceptor"/>
         </interceptor>
     </interceptors>
