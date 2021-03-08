@@ -12,4 +12,5 @@ public interface BoardService {
 	public BoardVO doSelectOne(BoardVO boardVO);
 	public List<BoardVO> doSelectList(PageVO pageVO);
 	public int count();
+	public int allDelete(BoardVO boardVO);
 }

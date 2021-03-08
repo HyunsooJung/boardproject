@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.myproject.myboard.board.BoardServiceImpl;
+import com.myproject.myboard.board.BoardVO;
 
 @Controller
 public class MemberController {
+	final static Logger LOG = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	MemberServiceImpl memberServiceImpl;
+	@Autowired
+	BoardServiceImpl boardServiceImpl;
 	
 	/**
 	 * 로그인
@@ -136,6 +143,11 @@ public class MemberController {
 	public int doDelete(MemberVO memberVO) {
 		int flag= memberServiceImpl.doDelete(memberVO);
 		
+		BoardVO boardVO= new BoardVO();
+		boardVO.setRegId(memberVO.getMemberId());
+		LOG.debug("member ID :  "+ boardVO.getRegId());
+		
+		boardServiceImpl.allDelete(boardVO);
 		return flag;
 	}
 	

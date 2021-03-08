@@ -54,6 +54,20 @@ public class BoardDao {
 	}
    
    /**
+    * 회원의 모든 게시물 삭제
+    * @param boardVO
+    * @return
+    */
+   public int allDelete(BoardVO boardVO) {	
+		 
+		 String statement = NAMESPACE + ".allDelete";
+		 
+		 int flag = sqlSession.delete(statement, boardVO);
+	
+		return flag;
+	}
+   
+   /**
     * 게시물 수정
     * @param boardVO
     * @return

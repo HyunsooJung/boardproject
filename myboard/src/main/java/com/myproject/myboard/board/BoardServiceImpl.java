@@ -43,4 +43,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.count();
 	}
 
+	@Override
+	public int allDelete(BoardVO boardVO) {
+		return boardDao.allDelete(boardVO);
+	}
+
 }

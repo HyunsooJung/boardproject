@@ -26,6 +26,14 @@
 		]]>	
 	</delete>
 	
+	<!-- 회원의 모든 게시물 삭제 -->
+	<delete id="allDelete" parameterType="BoardVO">
+		<![CDATA[
+		DELETE FROM test.board
+		WHERE REG_ID=#{regId}
+		]]>	
+	</delete>
+	
 	<!-- 게시물 수정 -->
 	<update id="doUpdate" parameterType="BoardVO">
 		UPDATE test.board
