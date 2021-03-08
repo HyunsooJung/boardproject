@@ -124,10 +124,14 @@ public class MemberController {
 	 * 회원등록
 	 * @param memberVO
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="member/doInsert.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doInsert(MemberVO memberVO) {
+	public int doInsert(MemberVO memberVO) throws Exception {
+		
+		String encode_pw = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
+		memberVO.setMemberPw(encode_pw);
 		int flag= memberServiceImpl.doInsert(memberVO);
 		
 		return flag;
