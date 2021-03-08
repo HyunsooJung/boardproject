@@ -28,6 +28,10 @@ public class PageVO {
 	
 	public String searchOption;
 	
+	public String startDate;
+	
+	public String endDate;
+	
 	public PageVO() {
 		super();
 	}
@@ -156,12 +160,29 @@ public class PageVO {
 		this.cntPage = cntPage;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	@Override
 	public String toString() {
 		return "PageVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
 				+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
 				+ ", cntPage=" + cntPage + ", searchWord=" + searchWord + ", searchOption=" + searchOption
-				+ ", toString()=" + super.toString() + "]";
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", toString()=" + super.toString() + "]";
 	}
+
 	
 }

@@ -76,6 +76,7 @@
 					SELECT *
 					FROM test.board
 					<include refid="search" />
+					<include refid="date1" />
 					ORDER BY SEQ DESC
 					) A
 		)B
@@ -96,6 +97,21 @@
 			<![CDATA[
 				WHERE ${searchOption} regexp #{searchWord}
 				]]>
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="date1">
+		<choose>
+			<when test="startDate == '' and endDate == '' ">
+			<![CDATA[
+				AND REG_DT between '2000-01-01' and DATE_FORMAT(NOW(),'%Y-%m-%d')
+				]]>
+			</when>
+			<otherwise>
+			<![CDATA[
+				AND REG_DT between #{startDate} and #{endDate}
+			]]>
 			</otherwise>
 		</choose>
 	</sql>

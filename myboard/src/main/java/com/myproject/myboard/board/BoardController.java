@@ -1,6 +1,8 @@
 package com.myproject.myboard.board;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +68,10 @@ public class BoardController {
 									 @RequestParam(value="cntPerPage", required=false)String cntPerPage,
 									 @RequestParam (defaultValue="REG_ID") String searchOption,
 									 @RequestParam (defaultValue="" ) String searchWord ,
-									 PageVO pageVO) {
+									 @RequestParam (defaultValue="") String startDate,
+									 @RequestParam (defaultValue="" ) String endDate,
+									 PageVO pageVO,
+									 HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView();
 		int total = boardServiceImpl.count();
 		
@@ -83,9 +88,18 @@ public class BoardController {
 		pageVO = new PageVO(Integer.parseInt(nowPage),total, Integer.parseInt(cntPerPage));
 		pageVO.setSearchOption(searchOption);
 		pageVO.setSearchWord(searchWord);
+				
+		pageVO.setStartDate(startDate);
+		pageVO.setEndDate(endDate);
 		
 		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
 				
+		LOG.debug("outvO:::"+outVO);
+		LOG.debug("endDate::"+endDate);
+		LOG.debug("startDate::"+startDate);
+		
+		mav.addObject("startDate"+startDate);
+		mav.addObject("endDate"+endDate);
 		mav.addObject("searchOption", searchOption);
 		mav.addObject("searchWord", searchWord);
 		mav.addObject("pageVO", pageVO);

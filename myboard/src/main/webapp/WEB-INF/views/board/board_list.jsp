@@ -16,6 +16,14 @@
 	<!-- Bootstrap core CSS -->
     <link href="${hContext}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
 <title>게시판</title>
 <style>
 	h2{
@@ -42,6 +50,49 @@
 		var sel = document.getElementById('cntPerPage').value;
 		location.href = "${hContext}/board/doSelectList.do?nowPage=${pageVO.nowPage}&cntPerPage="+sel;
 	}
+	
+
+	$(document).ready(function(){
+		$.datepicker.setDefaults($.datepicker.regional['ko']); 
+        $( "#startDate" ).datepicker({
+             changeMonth: true, 
+             changeYear: true,
+             nextText: '다음 달',
+             prevText: '이전 달', 
+             dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+             dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+             monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+             monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+             dateFormat: "yy-mm-dd",
+             maxDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+             onClose: function( selectedDate ) {    
+                  //시작일(startDate) datepicker가 닫힐때
+                  //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+                 $("#endDate").datepicker( "option", "minDate", selectedDate );
+             }    
+
+        });
+        $( "#endDate" ).datepicker({
+            changeMonth: true, 
+            changeYear: true,
+            nextText: '다음 달',
+            prevText: '이전 달', 
+            dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dateFormat: "yy-mm-dd",
+            maxDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+            onClose: function( selectedDate ) {    
+                // 종료일(endDate) datepicker가 닫힐때
+                // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+                $("#startDate").datepicker( "option", "maxDate", selectedDate );
+            }    
+
+       });    
+
+	});
+	
 </script>
 </head>
 <body>
@@ -71,6 +122,9 @@
 				</option>
 			</select>
 			<input name="searchWord" value="${pageVO.searchWord}">
+			<input type="text" id="startDate" name="startDate" placeholder="시작날짜" value="${pageVO.startDate}">~
+			<input type="text" id="endDate" name="endDate" placeholder="종료날짜" value="${pageVO.endDate}">
+
     		<input type="submit" value="조회">
 		</div>
 		</form>
@@ -120,7 +174,8 @@
 			</c:forEach>
 			</tbody>
 		</table>
-		<input type="button" value="글쓰기" style="float: right;" id="write_btn"><br>
+		
+		<input type="button" value="글쓰기" style="float: right;" id="write_btn">
 		
 		<div style="display: block; text-align: center;" >
 			<c:if test="${pageVO.startPage != 1 }">
@@ -141,12 +196,12 @@
 			</c:if>
 		</div>
 	</div>
-	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
+	//글쓰기 버튼 이벤트
 	$("#write_btn").on("click",function(){
 		window.location.href="${hContext}/board/doInsertView.do"
 	});

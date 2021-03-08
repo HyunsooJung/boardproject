@@ -145,7 +145,6 @@ public class MemberController {
 		
 		BoardVO boardVO= new BoardVO();
 		boardVO.setRegId(memberVO.getMemberId());
-		LOG.debug("member ID :  "+ boardVO.getRegId());
 		
 		boardServiceImpl.allDelete(boardVO);
 		return flag;
