@@ -25,6 +25,9 @@
 		        		<li>
 		        			<a href="${hContext}/member/logout.do" class="nav-link">로그아웃</a>	
 		        		</li>
+		        		<li class="nav-link">
+		        			${sessionScope.MemberVO.getName()}님 환영합니다.
+		        		</li>
 					</c:when>
 					<c:otherwise>
 						<li class="nav-item">
