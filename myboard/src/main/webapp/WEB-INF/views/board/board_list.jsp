@@ -53,8 +53,8 @@
 		<form action="${hContext}/board/doSelectList.do" method="post">
 		<div style="float: right;">
 			<select id="searchOption" name="searchOption">
-				<option value="regId"
-					<c:if test="${pageVO.searchOption == 'regId'}">selected</c:if>>
+				<option value="REG_ID"
+					<c:if test="${pageVO.searchOption == 'REG_ID'}">selected</c:if>>
 					작성자
 				</option>
 				<option value="title"

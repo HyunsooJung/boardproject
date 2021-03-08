@@ -78,14 +78,16 @@
 	
 	<sql id="search">
 		<choose>
-			<when test="searchOption == 'all'">
+			<when test="searchOption == 'all' ">
+			<![CDATA[
 				WHERE
-					REG_ID like '%#{searchWord}%' or
-					CONTENTS like '%#{searchWord}%' or
-					TITLE like '%#{searchWord}%'
+					concat(REG_ID,CONTENTS,TITLE) regexp #{searchWord}
+					]]>
 			</when>
 			<otherwise>
-				WHERE #{searchOption} like '%#{searchWord}%'
+			<![CDATA[
+				WHERE ${searchOption} regexp #{searchWord}
+				]]>
 			</otherwise>
 		</choose>
 	</sql>

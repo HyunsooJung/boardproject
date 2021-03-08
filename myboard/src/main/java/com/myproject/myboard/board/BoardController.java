@@ -61,11 +61,11 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping(value="board/doSelectList.do", method = RequestMethod.GET)
+	@RequestMapping(value="board/doSelectList.do", method = {RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView doSelectList(@RequestParam(value="nowPage", required=false)String nowPage,
 									 @RequestParam(value="cntPerPage", required=false)String cntPerPage,
-									 @RequestParam (defaultValue="regId") String searchOption,
-									 @RequestParam (defaultValue="") String searchWord ,
+									 @RequestParam (defaultValue="REG_ID") String searchOption,
+									 @RequestParam (defaultValue="" ) String searchWord ,
 									 PageVO pageVO) {
 		ModelAndView mav = new ModelAndView();
 		int total = boardServiceImpl.count();
@@ -87,8 +87,12 @@ public class BoardController {
 		LOG.debug("searchWord:"+searchWord);
 		LOG.debug("pageVO:"+pageVO);
 		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
+		for(BoardVO vo: outVO) {
+			LOG.debug("board vo :  "+vo);
+		}
 		
-		
+		mav.addObject("searchOption", searchOption);
+		mav.addObject("searchWord", searchWord);
 		mav.addObject("pageVO", pageVO);
 		mav.addObject("outVO", outVO);
 		mav.setViewName("board/board_list");
