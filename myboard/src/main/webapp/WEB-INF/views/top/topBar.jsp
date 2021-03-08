@@ -20,7 +20,10 @@
 				<c:choose>
 					<c:when test="${sessionScope.MemberVO != null}">
 						<li class="nav-item">
-		        			<a href="${hContext}/member/logout.do" class="nav-link">로그아웃</a>
+							<a href="${hContext}/member/memberConfirmPage.do" class="nav-link">회원정보 수정</a>		        				        			
+		        		</li>
+		        		<li>
+		        			<a href="${hContext}/member/logout.do" class="nav-link">로그아웃</a>	
 		        		</li>
 					</c:when>
 					<c:otherwise>

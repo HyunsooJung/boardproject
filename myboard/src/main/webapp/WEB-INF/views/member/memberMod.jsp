@@ -22,6 +22,7 @@
 <title>회원정보 수정</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/top/topBar.jsp" %>
 	<article class="container">
 		<div class="page-header">
 			<div class="col-md-6 col-md-offset-3">
@@ -55,8 +56,8 @@
 				</div>
 				<br>
 				<br>
-				<input style="width:300px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="modBtn">
-				<input style="width:300px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="뒤로가기" id="backBtn">
+				<input style="width:300px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="modBtn">
+				<input style="width:300px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="뒤로가기" id="backBtn">
 			</form>
 		</div>
 	</article>

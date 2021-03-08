@@ -83,14 +83,9 @@ public class BoardController {
 		pageVO = new PageVO(Integer.parseInt(nowPage),total, Integer.parseInt(cntPerPage));
 		pageVO.setSearchOption(searchOption);
 		pageVO.setSearchWord(searchWord);
-		LOG.debug("searchOption:"+searchOption);
-		LOG.debug("searchWord:"+searchWord);
-		LOG.debug("pageVO:"+pageVO);
-		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
-		for(BoardVO vo: outVO) {
-			LOG.debug("board vo :  "+vo);
-		}
 		
+		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
+				
 		mav.addObject("searchOption", searchOption);
 		mav.addObject("searchWord", searchWord);
 		mav.addObject("pageVO", pageVO);

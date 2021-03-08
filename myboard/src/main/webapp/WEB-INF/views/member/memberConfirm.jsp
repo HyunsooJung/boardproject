@@ -40,9 +40,9 @@
 								<label for="inputPw">비밀번호</label>
 								<input type="password" class="form-control" id="inputPw" name="inputPw" placeholder="PASSWORD" style="width:300px" >
 							</div>
-							<input style="width:150px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="modBtn" >
-							<input style="width:150px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="탈퇴" id="deleteBtn" >
-							<input style="width:150px; background-color:white; margin:5px;" class="btn btn-primary btn-lg" type="button" value="뒤로가기" id="backBtn" >
+							<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="modBtn" >
+							<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="탈퇴" id="deleteBtn" >
+							<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="뒤로가기" id="backBtn" >
 				
 						</div>
 					</div>
