@@ -149,7 +149,7 @@
 		    },
 		    success:function(data){ //성공
 		    	alert("권한 수정을 완료했습니다.");
-			       window.location.href="${hContext}/product/moveToMainPage.do";
+			       window.location.href="${hContext}/member/adminPage.do";
 				      
 		    },		       
 		    error:function(xhr,status,error){

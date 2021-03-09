@@ -79,13 +79,24 @@ public class MemberController {
 	public int doAdminUpdate(MemberVO memberVO, HttpServletRequest req) {
 		HttpSession httpSession = req.getSession();
 		
-		int flag = memberServiceImpl.doAdminUpdate(memberVO);
-		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
-		if(flag==1) {
-			httpSession.setAttribute("MemberVO", outVO);
-		}
+		String memberId[] = req.getParameterValues("memberId");
+		String auth[] = req.getParameterValues("auth");
 		
-		return flag;
+		for(int i=0; i<memberId.length; i++) {
+			
+			memberVO.setMemberId(memberId[i]);
+			memberVO.setAuth(Integer.parseInt(auth[i]));
+			
+			int flag = memberServiceImpl.doAdminUpdate(memberVO);
+			MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+			if(flag==1) {
+				httpSession.setAttribute("MemberVO", outVO);
+			}
+			return flag;
+		}
+		return 0;
+		
+		
 	}
 	
 	/**
