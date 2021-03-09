@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+\<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:set var="hContext" value="${pageContext.request.contextPath }" ></c:set> 
 <!-- Navigation -->
@@ -11,14 +11,17 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive" >
 			<ul class="navbar-nav ml-auto" >			
 				<li class="nav-item">
-					<a type="button" class="nav-link" id="moveToBoard" >게시판</a>
-					<form action="${hContext }/board/doSelectList.do" name="moveBoard">
-					</form>
+					<a type="button" class="nav-link" id="moveToBoard" href="${hContext }/board/doSelectList.do" >게시판</a>					
 				</li>
 				
 				<li class="nav-item">
 				<c:choose>
 					<c:when test="${sessionScope.MemberVO != null}">
+					<c:if test = "${sessionScope.MemberVO.getAuth() == 9 }">
+						<li class="nav-item">
+							<a href="${hContext}/member/adminPage.do" class="nav-link">관리자 페이지</a>		        				        			
+		        		</li>
+					</c:if>
 						<li class="nav-item">
 							<a href="${hContext}/member/memberConfirmPage.do" class="nav-link">회원정보 수정</a>		        				        			
 		        		</li>
@@ -43,16 +46,5 @@
 		</div>
 	</div>
 </nav>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${hContext}/resources/js/bootstrap.min.js"></script>
-<script type="text/javascript">
 
-	$("#moveToBoard").on("click", function(){
-		moveBoardList();
-	});
-	
-	function moveBoardList(){
-		var frm = document.moveBoard;
-		frm.submit();
-	};
-</script>

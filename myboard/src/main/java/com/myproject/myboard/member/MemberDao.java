@@ -73,6 +73,19 @@ public class MemberDao {
 		int flag = sqlSession.update(statement, memberVO);
 		return flag;
 	}
+
+	/**
+	 * 회원 권한 수정
+	 * @param memberVO
+	 * @return
+	 */
+	public int doAdminUpdate(MemberVO memberVO) {
+		 
+		String statement = NAMESPACE + ".doAdminUpdate";
+	 
+		int flag = sqlSession.update(statement, memberVO);
+		return flag;
+	}
 	
 	/**
 	 * 회원단건조회
@@ -95,7 +108,7 @@ public class MemberDao {
 	public List<MemberVO> doSelectList(MemberVO memberVO) {
 		String statement = NAMESPACE + ".doSelectList";
 		
-		List<MemberVO> outVO = sqlSession.selectOne(statement,memberVO);
+		List<MemberVO> outVO = sqlSession.selectList(statement,memberVO);
        
 		return outVO;
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.myproject.myboard.board.BoardServiceImpl;
@@ -33,17 +34,18 @@ public class MemberController {
 	 * 로그인
 	 * @param memberVO
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="member/doLogin.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doLogin(HttpServletRequest req, MemberVO memberVO) {
+	public int doLogin(HttpServletRequest req, MemberVO memberVO) throws Exception {
 		HttpSession httpSession = req.getSession();
-		
 		int flag=0;
 		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+		String encode_pw = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
 		
 		try {
-			if(outVO.getMemberPw().equals(memberVO.getMemberPw())) {
+			if(outVO.getMemberPw().equals(encode_pw)) {
 				flag = 1;
 				httpSession.setAttribute("MemberVO", outVO);
 			}
@@ -70,6 +72,35 @@ public class MemberController {
 		int flag = memberServiceImpl.doMemberIdChk(memberVO);
 		
 		return flag;
+	}
+	
+	@RequestMapping(value="member/doAdminUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int doAdminUpdate(MemberVO memberVO, HttpServletRequest req) {
+		HttpSession httpSession = req.getSession();
+		
+		int flag = memberServiceImpl.doAdminUpdate(memberVO);
+		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+		if(flag==1) {
+			httpSession.setAttribute("MemberVO", outVO);
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * 관리자 페이지
+	 * @return
+	 */
+	@RequestMapping(value="member/adminPage.do", method = RequestMethod.GET)
+	public ModelAndView adminPage(MemberVO memberVO) {
+		ModelAndView mav = new ModelAndView();
+		
+		List<MemberVO> outVO = memberServiceImpl.doSelectList(memberVO);
+		
+		mav.addObject("memberVO",outVO);
+		mav.setViewName("admin/admin");
+		return mav;
 	}
 	
 	/**
@@ -136,10 +167,8 @@ public class MemberController {
 	@ResponseBody
 	public int doInsert(MemberVO memberVO) throws Exception {
 		
-		/*
-		 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); String encode_pw
-		 * = encoder.encode(memberVO.getMemberPw()); memberVO.setMemberPw(encode_pw);
-		 */
+		String encode_password = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
+		memberVO.setMemberPw(encode_password);
 		int flag= memberServiceImpl.doInsert(memberVO);
 		
 		return flag;

@@ -56,36 +56,49 @@
 	</form>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	
 	//삭제 이벤트
 	$("#delete_btn").on("click",function(){
-		if(false==confirm("삭제 하시겠습니까?"))return; 
-		$.ajax({
-			type:"POST",
-			url:"${hContext}/board/doDelete.do",
-			dataType:"html",
-			data:{
-				"seq":$("#seq").val(),
-				"title" : $("#title").val(),
-				"contents" : $("#contents").val(),
-				"regId" : $("#regId").val()
-			},
-			success:function(data){
-				alert("삭제되었습니다");
-				window.location.href="${hContext}/board/doSelectList.do";
-			},
-			error:function(xhr,status,error){
-				alert("error:"+error);
-				console.log("error:"+error);
-			}
-		});
+		if(${sessionScope.MemberVO.getAuth()>=3}){
+			if(false==confirm("삭제 하시겠습니까?"))return; 
+			$.ajax({
+				type:"POST",
+				url:"${hContext}/board/doDelete.do",
+				dataType:"html",
+				data:{
+					"seq":$("#seq").val(),
+					"title" : $("#title").val(),
+					"contents" : $("#contents").val(),
+					"regId" : $("#regId").val()
+				},
+				success:function(data){
+					alert("삭제되었습니다");
+					window.location.href="${hContext}/board/doSelectList.do";
+				},
+				error:function(xhr,status,error){
+					alert("error:"+error);
+					console.log("error:"+error);
+				}
+			});	
+		}
+		else{
+			alert("삭제권한이 없습니다.");
+		}
+		
 	});
 	
 	//수정페이지이동 이벤트
 	$("#mod_btn").on("click",function(){
-		$("#modForm").attr('action', '${hContext}/board/doUpdatePage.do');
-		$("#modForm").submit();
+		if(${sessionScope.MemberVO.getAuth()>=3}){
+			$("#modForm").attr('action', '${hContext}/board/doUpdatePage.do');
+			$("#modForm").submit();	
+		}
+		else{
+			alert("수정권한이 없습니다.");
+		}
+		
 	});
 	
 	

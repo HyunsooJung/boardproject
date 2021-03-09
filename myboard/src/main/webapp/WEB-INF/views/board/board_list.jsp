@@ -166,7 +166,7 @@
 				<tr>
 					<td>${list.rn }</td>
 					<div style="display: none"><c:out value="${list.seq }" /></div>
-					<td><a <c:if test="${null != sessionScope.MemberVO }">href='${hContext}/board/doSelectOne.do?seq=${list.seq }' </c:if>> ${list.title }</a></td>
+					<td><a <c:if test="${null != sessionScope.MemberVO && sessionScope.MemberVO.getAuth() >=2 }">href='${hContext}/board/doSelectOne.do?seq=${list.seq }' </c:if>> ${list.title }</a></td>
 					<td>${list.regId }</td>
 					<td>${list.regDt }</td>
 					<td>${list.views }</td>
@@ -203,7 +203,13 @@
 	
 	//글쓰기 버튼 이벤트
 	$("#write_btn").on("click",function(){
-		window.location.href="${hContext}/board/doInsertView.do"
+		if(${sessionScope.MemberVO.getAuth()>=3}){
+			window.location.href="${hContext}/board/doInsertView.do";	
+		}
+		else{
+			alert("글쓰기 권한이 없습니다.");
+		}
+		
 	});
 	
 	</script>

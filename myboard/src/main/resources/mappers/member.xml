@@ -37,6 +37,13 @@
 		WHERE MEMBER_ID=#{memberId};		
 	</update>
 	
+	<!-- 권한수정 -->
+	<update id="doAdminUpdate" parameterType="MemberVO">
+		UPDATE test.members
+		SET AUTH=#{auth}
+		WHERE MEMBER_ID=#{memberId};		
+	</update>
+	
 	<select id="doSelectOne" parameterType="MemberVO" resultType="MemberVO">
 		SELECT MEMBER_ID, 
 			   MEMBER_PW, 
@@ -49,7 +56,6 @@
 	
 	<select id="doSelectList" parameterType="MemberVO" resultType="MemberVO"> 
 		SELECT *
-		FROM   MEMBER
-		WHERE  AUTH = #{auth}
+		FROM   test.members
 	</select> 
 </mapper>
