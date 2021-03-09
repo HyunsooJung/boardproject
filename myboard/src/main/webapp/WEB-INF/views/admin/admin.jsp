@@ -75,7 +75,7 @@
 					</select>
 					</td>
 					<td>
-						<input type="checkbox" id= "admin_chk" name="admin_chk" value= "${list.memberId }" >
+						<input type="checkbox" name="admin_chk" value= "${list.memberId }" >
 						<input type="hidden" name="hiddenValue" id="hiddenValue" value=""/>
 					</td>
 				</tr>
@@ -116,17 +116,16 @@
 		var idArray = [];
 		var adminArray = [];
 		
-		/* $.each($('table tr'), function(){
+		//권한 이벤트
+		$.each($('table tr'), function(idx){
 			$(this).find('[name=sel]').val();
-			adminArray.push($(this).find('[name=sel]').val());
-			console.log("$(this).find('[name=sel]').val():"+$(this).find('[name=sel]').val());
+			if(idx != 0){
+				if($(this).find('[name=admin_chk]').is(':checked')){
+					adminArray.push($(this).find('[name=sel]').val());	
+				}	
+			}			
 			console.log("adminArray:"+adminArray);
-		}); */
-		
-		$('select[name=sel]:selected').each(function(){
-			adminArray.push(this.value);
-			console.log("adminArray::"+adminArray);
-		});
+		}); 
 		
 		//체크박스 이벤트
 		$('input:checkbox[name=admin_chk]:checked').each(function(){
@@ -139,7 +138,28 @@
 				"memberId" : idArray,
 				"auth"	   : adminArray
 		};
-		
+		$.ajax({
+		    type:"POST",
+		    url:"${hContext}/member/doAdminUpdate.do",
+		    dataType:"html",
+		    traditional:true, 
+		    data:{
+		    	"memberId"  : idArray,
+		    	"auth"	   : adminArray
+		    },
+		    success:function(data){ //성공
+		    	alert("권한 수정을 완료했습니다.");
+			       window.location.href="${hContext}/product/moveToMainPage.do";
+				      
+		    },		       
+		    error:function(xhr,status,error){
+		     alert("error:"+error);
+		    },
+		    complete:function(data){
+		    
+		    }   
+		  
+	});//--ajax 
 		
 	});
 	
