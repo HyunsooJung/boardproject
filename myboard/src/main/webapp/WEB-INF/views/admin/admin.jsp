@@ -62,7 +62,7 @@
 						<c:if test="${null == list.auth }">권한없음</c:if>
 					</td>
 					<td>
-					<select id="cntPerPage" name="sel" onchange="selChange()">
+					<select name="sel">
 						<option value="1">
 							권한 없음
 						</option>
@@ -75,7 +75,8 @@
 					</select>
 					</td>
 					<td>
-						<input type="checkbox" id= "admin_chk" name="admin_chk">
+						<input type="checkbox" id= "admin_chk" name="admin_chk" value= "${list.memberId }" >
+						<input type="hidden" name="hiddenValue" id="hiddenValue" value=""/>
 					</td>
 				</tr>
 			</c:forEach>
@@ -110,8 +111,38 @@
 	
 	//권한주기 이벤트
 	$("#admin_btn").on("click",function(){
+		alert("s");
+		
+		var idArray = [];
+		var adminArray = [];
+		
+		/* $.each($('table tr'), function(){
+			$(this).find('[name=sel]').val();
+			adminArray.push($(this).find('[name=sel]').val());
+			console.log("$(this).find('[name=sel]').val():"+$(this).find('[name=sel]').val());
+			console.log("adminArray:"+adminArray);
+		}); */
+		
+		$('select[name=sel]:selected').each(function(){
+			adminArray.push(this.value);
+			console.log("adminArray::"+adminArray);
+		});
+		
+		//체크박스 이벤트
+		$('input:checkbox[name=admin_chk]:checked').each(function(){
+			
+			idArray.push(this.value);
+			console.log("idArray:"+idArray);
+		});
+		
+		var objParams = {
+				"memberId" : idArray,
+				"auth"	   : adminArray
+		};
+		
 		
 	});
+	
 	
 	</script>	
 </body>
