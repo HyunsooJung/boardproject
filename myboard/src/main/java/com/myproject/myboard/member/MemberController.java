@@ -43,12 +43,13 @@ public class MemberController {
 		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
 		
 		try {
-			if(!outVO.getMemberPw().equals(memberVO.getMemberPw())) {
-				flag = 2;
+			if(outVO.getMemberPw().equals(memberVO.getMemberPw())) {
+				flag = 1;
+				httpSession.setAttribute("MemberVO", outVO);
 			}
 			else {
-				flag=1;
-				httpSession.setAttribute("MemberVO", outVO);
+				flag=2;
+				
 			}
 		} catch (NullPointerException e) {
 			flag=3;
@@ -135,8 +136,10 @@ public class MemberController {
 	@ResponseBody
 	public int doInsert(MemberVO memberVO) throws Exception {
 		
-		String encode_pw = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
-		memberVO.setMemberPw(encode_pw);
+		/*
+		 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); String encode_pw
+		 * = encoder.encode(memberVO.getMemberPw()); memberVO.setMemberPw(encode_pw);
+		 */
 		int flag= memberServiceImpl.doInsert(memberVO);
 		
 		return flag;
