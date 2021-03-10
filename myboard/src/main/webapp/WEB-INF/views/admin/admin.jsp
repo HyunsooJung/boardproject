@@ -120,12 +120,12 @@
 						<b>${p }</b>
 					</c:when>
 					<c:when test="${p != pageVO.nowPage }">
-						<a href="${hContext}/member/adminPage.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage }&searchOption=${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >${p}</a>
+						<a href="${hContext}/member/adminPage.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage }&searchOption=${pageVO.searchOption }&searchWord=${pageVO.searchWord }" >${p}</a>
 					</c:when>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pageVO.endPage != pageVO.lastPage }">
-				<a href="${hContext}/member/adminPage.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage }&searchOption=$${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >&gt;</a>	
+				<a href="${hContext}/member/adminPage.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage }&searchOption=$${pageVO.searchOption }&searchWord=${pageVO.searchWord }" >&gt;</a>	
 			</c:if>
 		</div>
 	</div>

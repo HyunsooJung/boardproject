@@ -101,7 +101,7 @@
 
 	<div id="outter">
 		<!-- 검색 -->
-		<form action="${hContext}/board/doSelectList.do" method="get">
+		<form action="${hContext}/board/doSelectList.do" method="post">
 		<div style="float: right;">
 			<select id="searchOption" name="searchOption">
 				<option value="REG_ID"
