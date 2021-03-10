@@ -111,8 +111,7 @@
 	
 	//권한주기 이벤트
 	$("#admin_btn").on("click",function(){
-		alert("s");
-		
+		if(false==confirm("권한수정을 하시겠습니까?"))return; 
 		var idArray = [];
 		var adminArray = [];
 		

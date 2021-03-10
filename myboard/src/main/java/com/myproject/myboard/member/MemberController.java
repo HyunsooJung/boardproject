@@ -88,11 +88,6 @@ public class MemberController {
 			memberVO.setAuth(Integer.parseInt(auth[i]));
 			
 			int flag = memberServiceImpl.doAdminUpdate(memberVO);
-			MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
-			if(flag==1) {
-				httpSession.setAttribute("MemberVO", outVO);
-			}
-			return flag;
 		}
 		return 0;
 		

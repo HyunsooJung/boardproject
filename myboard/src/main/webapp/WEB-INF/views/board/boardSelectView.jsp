@@ -47,7 +47,7 @@
 		</div>
 		<div>
 				<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="목록" id="list_btn" >
-			<c:if test="${outVO.regId == sessionScope.MemberVO.getMemberId()}">
+			<c:if test="${outVO.regId == sessionScope.MemberVO.getMemberId() || sessionScope.MemberVO.getAuth() == 9}">
 				<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="수정" id="mod_btn" >
 				<input style="width:150px; background-color:black; margin:5px;" class="btn btn-primary btn-lg" type="button" value="삭제" id="delete_btn" >
 			</c:if>

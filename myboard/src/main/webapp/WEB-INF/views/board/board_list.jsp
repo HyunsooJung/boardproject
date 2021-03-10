@@ -101,7 +101,7 @@
 
 	<div id="outter">
 		<!-- 검색 -->
-		<form action="${hContext}/board/doSelectList.do" method="post">
+		<form action="${hContext}/board/doSelectList.do" method="get">
 		<div style="float: right;">
 			<select id="searchOption" name="searchOption">
 				<option value="REG_ID"
@@ -187,12 +187,12 @@
 						<b>${p }</b>
 					</c:when>
 					<c:when test="${p != pageVO.nowPage }">
-						<a href="${hContext}/board/doSelectList.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage } " >${p}</a>
+						<a href="${hContext}/board/doSelectList.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage }&searchOption=${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >${p}</a>
 					</c:when>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pageVO.endPage != pageVO.lastPage }">
-				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage } " >&gt;</a>	
+				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage }&searchOption=$${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >&gt;</a>	
 			</c:if>
 		</div>
 	</div>
