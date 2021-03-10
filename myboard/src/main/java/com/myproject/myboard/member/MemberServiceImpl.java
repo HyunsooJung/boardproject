@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.myproject.myboard.cmn.PageVO;
+
 @Service("MemberServiceImpl")
 public class MemberServiceImpl implements MemberService {
 
@@ -32,8 +34,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> doSelectList(MemberVO memberVO) {
-		return memberDao.doSelectList(memberVO);
+	public List<MemberVO> doSelectList(PageVO pageVO) {
+		return memberDao.doSelectList(pageVO);
 	}
 
 	@Override

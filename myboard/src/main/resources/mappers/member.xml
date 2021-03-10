@@ -54,8 +54,35 @@
 		
 	</select>
 	
-	<select id="doSelectList" parameterType="MemberVO" resultType="MemberVO"> 
-		SELECT *
-		FROM   test.members
-	</select> 
+	<select id="doSelectList" resultType="MemberVO"> 
+		SELECT B.*
+		FROM (
+				SELECT ROW_NUMBER() OVER (order by A.auth DESC) as  RN, A.*
+				FROM(
+					SELECT *
+					FROM test.members
+					<include refid="search" />
+					) A
+		)B
+		<![CDATA[
+		WHERE RN BETWEEN #{start} AND #{end}
+		]]>
+	</select>
+		
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'name' ">
+				<![CDATA[
+				WHERE
+					concat(NAME) regexp #{searchWord}
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+				WHERE ${searchOption} regexp #{searchWord}
+				]]>
+			</otherwise>
+		</choose>
+	</sql>
+	 
 </mapper>

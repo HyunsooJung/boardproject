@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.myproject.myboard.cmn.PageVO;
+
 @Repository("MemberDao")
 public class MemberDao {
 
@@ -105,10 +107,10 @@ public class MemberDao {
 	 * @param memberVO
 	 * @return
 	 */
-	public List<MemberVO> doSelectList(MemberVO memberVO) {
+	public List<MemberVO> doSelectList(PageVO pageVO) {
 		String statement = NAMESPACE + ".doSelectList";
 		
-		List<MemberVO> outVO = sqlSession.selectList(statement,memberVO);
+		List<MemberVO> outVO = sqlSession.selectList(statement,pageVO);
        
 		return outVO;
 	}

@@ -14,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.myproject.myboard.board.BoardServiceImpl;
 import com.myproject.myboard.board.BoardVO;
+import com.myproject.myboard.cmn.PageVO;
 
 @Controller
 public class MemberController {
@@ -99,11 +101,33 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value="member/adminPage.do", method = RequestMethod.GET)
-	public ModelAndView adminPage(MemberVO memberVO) {
+	public ModelAndView adminPage(@RequestParam(value="nowPage", required=false)String nowPage,
+			 					  @RequestParam(value="cntPerPage", required=false)String cntPerPage,
+			 					  @RequestParam (defaultValue="MEMBER_ID") String searchOption,
+			 					  @RequestParam (defaultValue="" ) String searchWord ,
+			 					  MemberVO memberVO,
+			 					  PageVO pageVO) {
 		ModelAndView mav = new ModelAndView();
+		int total = boardServiceImpl.count();
+		if(nowPage == null && cntPerPage ==null) {
+			nowPage = "1";
+			cntPerPage="5";
+		}
+		else if(nowPage == null) {
+			nowPage = "1";
+		}
+		else if(cntPerPage == null) {
+			cntPerPage="5";
+		}
+		pageVO = new PageVO(Integer.parseInt(nowPage),total, Integer.parseInt(cntPerPage));
+		pageVO.setSearchOption(searchOption);
+		pageVO.setSearchWord(searchWord);
 		
-		List<MemberVO> outVO = memberServiceImpl.doSelectList(memberVO);
+		List<MemberVO> outVO = memberServiceImpl.doSelectList(pageVO);
 		
+		mav.addObject("searchOption",searchOption);
+		mav.addObject("searchWord",searchWord);
+		mav.addObject("pageVO",pageVO);
 		mav.addObject("memberVO",outVO);
 		mav.setViewName("admin/admin");
 		return mav;
@@ -184,11 +208,28 @@ public class MemberController {
 	 * 회원탈퇴
 	 * @param memberVO
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="member/doDelete.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doDelete(MemberVO memberVO) {
-		int flag= memberServiceImpl.doDelete(memberVO);
+	public int doDelete(MemberVO memberVO) throws Exception {
+		int flag= 0;
+		
+		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
+		String encode_pw = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
+		
+		try {
+			if(outVO.getMemberPw().equals(encode_pw)) {
+				flag= memberServiceImpl.doDelete(memberVO);
+			}
+			else {
+				flag=2;
+			}
+				
+		}
+		catch (NullPointerException e){
+			
+		}
 		
 		BoardVO boardVO= new BoardVO();
 		boardVO.setRegId(memberVO.getMemberId());
@@ -201,12 +242,15 @@ public class MemberController {
 	 * 회원수정
 	 * @param memberVO
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="member/doUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doUpdate(MemberVO memberVO, HttpServletRequest req) {
+	public int doUpdate(MemberVO memberVO, HttpServletRequest req) throws Exception {
 		HttpSession httpSession = req.getSession();
 		
+		String encode_password = LoginUtil.encryptPassword(memberVO.getMemberId(), memberVO.getMemberPw());
+		memberVO.setMemberPw(encode_password);
 		int flag = memberServiceImpl.doUpdate(memberVO);
 		MemberVO outVO = memberServiceImpl.doSelectOne(memberVO);
 		if(flag==1) {
@@ -239,8 +283,8 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "member/doSelectList.do", method = RequestMethod.GET)
 	@ResponseBody
-	public String doSelectList(MemberVO memberVO){
-		List<MemberVO> outVO = memberServiceImpl.doSelectList(memberVO);
+	public String doSelectList(PageVO pageVO){
+		List<MemberVO> outVO = memberServiceImpl.doSelectList(pageVO);
 		
 		Gson gson = new Gson();
 		String json=gson.toJson(outVO);

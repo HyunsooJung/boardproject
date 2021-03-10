@@ -66,47 +66,72 @@
 	
 	//수정페이지 버튼 이벤트
 	$("#modBtn").on("click",function(){
-		if(($("#inputId").val() == $("#memberId").val()) && ($("#inputPw").val() == $("#memberPw").val())  ){
-			window.location.href = "${hContext}/member/modPage.do";	
+		if($("#inputId").val() == ''){
+			alert("아이디를 입력해주세요.");
+			return ;
 		}
-		else{
-			alert("아이디와 비밀번호를 확인해 주세요.");
+		if($("#inputPw").val() == ''){
+			alert("비밀번호를 입력해주세요.")
+			return ;
 		}
+		$.ajax({
+			type: "POST",
+			url: "${hContext }/member/doLogin.do",
+			dataType:"html",
+			data:{
+				  "memberId": $("#inputId").val(),
+				  "memberPw": $("#inputPw").val()
+			},
+			success : function(data){
+				console.log(data);
+				if(data == 1){						
+					alert("회원확인 성공");
+					window.location.href = "${hContext}/member/modPage.do";			
+				}else if(data == 2){
+					console.log(data);
+					alert("비밀번호를 확인하세요.");
+					location.reload();
+				}else if(data == 3){
+					console.log(data);
+					alert("ID를 확인하세요.");
+					location.reload();
+				}
+			},
+			error:function(data){
+				
+			}	
+		});
 	});
 	
 	//탈퇴 버튼 이벤트
-	$("#deleteBtn").on("click",function(){		
-		if(($("#inputId").val() == $("#memberId").val()) && ($("#inputPw").val() == $("#memberPw").val())  ){
-			if(confirm("탈퇴하시겠습니까?")){
-				deleteMember();
-				window.location.href = "${hContext}/member/loginPage.do";
-			}
-			else{
-				alert("취소하였습니다.");
-				loaction.reload();
-			}
+	$("#deleteBtn").on("click",function(){
+		if($("#inputId").val() == ''){
+			alert("아이디를 입력해주세요.");
+			return ;
 		}
-		else{
-			alert("아이디와 비밀번호를 확인해 주세요.");
+		if($("#inputPw").val() == ''){
+			alert("비밀번호를 입력해주세요.")
+			return ;
 		}
-	});
-	
-	function deleteMember(){
+		if(false==confirm("탈퇴 하시겠습니까?"))return; 
 		$.ajax({
 			type : "POST",
 			url  : "${hContext}/member/doDelete.do",
 			dataType : "html",
 			data:{
-				"memberId" : $("#inputId").val()
+				"memberId" : $("#inputId").val(),
+				"memberPw": $("#inputPw").val()
 			},
 			success:function(data){
 				alert("탈퇴하였습니다.");
+				window.location.href = "${hContext}/member/loginPage.do";
 			},
 			error:function(data){
 				alert("정보를 다시 입력해주세요");
 			}
 		});
-	}
+	});
+	
 	
 	</script>
 </body>

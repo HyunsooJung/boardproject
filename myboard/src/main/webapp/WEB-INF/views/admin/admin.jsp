@@ -30,12 +30,23 @@
 
 	<div id="outter">
 		<!-- 검색 -->
-		<%-- <form action="${hContext}/member/doAdminUpdate.do" method="post">
+		<form action="${hContext}/member/adminPage.do" method="get">
 		<div style="float: right;">
-			권한명<input name="searchWord" value="${outVO.getAuth()}">
+			<select id="searchOption" name="searchOption">
+				<option value="MEMBER_ID"
+					<c:if test="${pageVO.searchOption == 'MEMBER_ID'}">selected</c:if>>
+					회원아이디
+				</option>
+				<option value="name"
+					<c:if test="${pageVO.searchOption == 'name'}">selected</c:if>>
+					회원이름
+				</option>
+			</select>
+			<input name="searchWord" value="${pageVO.searchWord}">
+			
     		<input type="submit" value="조회">
 		</div>
-		</form> --%>
+		</form>
 		<!-- 검색 끝 -->
 		
 		<table border="1">
@@ -85,9 +96,9 @@
 		
 		<input type="button" value="권한 수정" style="float: right;" id="admin_btn">
 		
-		<%-- <div style="display: block; text-align: center;" >
+		<div style="display: block; text-align: center;" >
 			<c:if test="${pageVO.startPage != 1 }">
-				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.startPage - 1}&cntPerPage=${pageVO.cntPerPage}">&lt;</a>
+				<a href="${hContext}/member/adminPage.do?nowPage=${pageVO.startPage - 1}&cntPerPage=${pageVO.cntPerPage}">&lt;</a>
 			</c:if>
 			<c:forEach begin="${pageVO.startPage }" end="${pageVO.endPage }" var="p" >
 				<c:choose>
@@ -95,14 +106,14 @@
 						<b>${p }</b>
 					</c:when>
 					<c:when test="${p != pageVO.nowPage }">
-						<a href="${hContext}/board/doSelectList.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage } " >${p}</a>
+						<a href="${hContext}/member/adminPage.do?nowPage=${p}&cntPerPage=${pageVO.cntPerPage }&searchOption=${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >${p}</a>
 					</c:when>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pageVO.endPage != pageVO.lastPage }">
-				<a href="${hContext}/board/doSelectList.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage } " >&gt;</a>	
+				<a href="${hContext}/member/adminPage.do?nowPage=${pageVO.endPage+1 }&cntPerPage=${pageVO.cntPerPage }&searchOption=$${pageVO.searchOption }&searchWord=${pageVO.searchWord }&startDate=${pageVO.startDate }&endDate=${pageVO.endDate } " >&gt;</a>	
 			</c:if>
-		</div> --%>
+		</div>
 	</div>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

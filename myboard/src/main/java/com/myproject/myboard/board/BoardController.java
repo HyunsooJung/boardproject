@@ -93,10 +93,6 @@ public class BoardController {
 		pageVO.setEndDate(endDate);
 		
 		List<BoardVO> outVO = boardServiceImpl.doSelectList(pageVO);
-				
-		LOG.debug("outvO:::"+outVO);
-		LOG.debug("endDate::"+endDate);
-		LOG.debug("startDate::"+startDate);
 		
 		mav.addObject("startDate"+startDate);
 		mav.addObject("endDate"+endDate);
