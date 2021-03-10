@@ -19,6 +19,20 @@
 <title>관리자 페이지</title>
 
 <style>
+	h2{
+		text-align: center;
+	}
+	table{
+		width: 100%;
+	}
+	#outter {
+		display: block;
+		width: 60%;
+		margin: auto;
+	}
+	a{
+		text-decoration: none;
+	}
 	body{
 		padding-top:200px;
 	}
