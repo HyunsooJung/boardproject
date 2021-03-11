@@ -147,30 +147,5 @@ public class BoardController {
 		return flag;
 	}
 	
-	/**
-	 * 게시물 단건 조회
-	 * @param boardVO
-	 * @return
-	 */
-	@RequestMapping(value = "board/doSelectOne2.do", method = RequestMethod.GET)
-	public String doSelectOne2(BoardVO boardVO) {
-		BoardVO outVO = boardServiceImpl.doSelectOne(boardVO);
 
-		Gson gson = new Gson();
-		String json = gson.toJson(outVO);
-
-		return json;
-	}
-	
-	//@RequestMapping(value = "board/doSelectList2.do", method = RequestMethod.GET)
-	//public String doSelectList2(BoardVO boardVO) {
-	//	List<BoardVO> outVO = boardServiceImpl.doSelectList(boardVO);
-    //
-	//	Gson gson = new Gson();
-	//	String json = gson.toJson(outVO);
-    //
-	//	return json;
-	//}
-	
-	
 }

@@ -12,6 +12,7 @@
 		<typeAlias type="com.myproject.myboard.board.BoardVO" alias="BoardVO" />
 		<typeAlias type="com.myproject.myboard.member.MemberVO" alias="MemberVO" />
 		<typeAlias type="com.myproject.myboard.cmn.PageVO" alias="PageVO" />
+		<typeAlias type="com.myproject.myboard.comment.CommentVO" alias="CommentVO" />
 	</typeAliases>
 
 </configuration>
