@@ -6,19 +6,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.myproject.myboard.member.MemberVO;
 
 @Controller
 public class CommentController {
-
+	final static Logger LOG = LoggerFactory.getLogger("CommentController");
 	@Autowired
 	CommentServiceImpl commentServiceImpl;
 	
@@ -27,12 +30,12 @@ public class CommentController {
 	 * @param commentVO
 	 * @return
 	 */
-	@RequestMapping(value="comment/doInsert.do", method = RequestMethod.POST)
+	@RequestMapping(value="comment/doInsert.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public int doInsert(CommentVO commentVO, HttpServletRequest req) {
+	public ModelAndView doInsert(CommentVO commentVO, HttpServletRequest req) {
 		
 		MemberVO memberVO = (MemberVO) req.getSession().getAttribute("MemberVO");
-		
+		LOG.debug("memberVO23:"+memberVO);
 		//댓글 작성자
 		String memberId = memberVO.getMemberId();		
 		//댓글의 그룹번호
@@ -56,11 +59,13 @@ public class CommentController {
 		else {
 			commentVO.setCommentGroup(Integer.parseInt(commentGroup));
 		}
-				
+		LOG.debug("memberVO1:"+memberVO);		
 		int flag = commentServiceImpl.doInsert(commentVO);
-		CommentVO outVO = commentServiceImpl.doSelectOne(commentVO);
-		req.setAttribute("commentList", outVO);
-		return flag;
+		//List<CommentVO> outVO = commentServiceImpl.doSelectList(commentVO);
+		LOG.debug("memberVO2:"+memberVO);
+		//LOG.debug("outVO:"+outVO);
+		//req.setAttribute("commentList", outVO);
+		return new ModelAndView("redirect:/board/doSelectOne.do?seq="+refGroup);
 	}
 
 	/**
@@ -85,9 +90,11 @@ public class CommentController {
 	 */
 	@RequestMapping(value="comment/doUpdate.do", method = RequestMethod.POST)
 	@ResponseBody
-	public int doUpdate(CommentVO commentVO) {
-		int flag = commentServiceImpl.doUpdate(commentVO);
-		return flag;
+	public Map<String,Object> doUpdate(CommentVO commentVO) {
+		commentServiceImpl.doUpdate(commentVO);
+		Map<String,Object> map = new HashMap();
+		map.put("isSuccess", true);
+		return map;
 	}
 
 	/**
@@ -109,21 +116,19 @@ public class CommentController {
 	 * @param commentVO
 	 * @return
 	 */
-	@RequestMapping(value="comment/doSelectList.do", method = RequestMethod.GET)
-	public String doSelectList(CommentVO commentVO, HttpServletRequest req) {
-		//파라미터로 전달되는 글번호
-		int num = Integer.parseInt(req.getParameter("num"));
-		
-		commentVO.setNum(num);
-		
-		
-		
-		List<CommentVO> outVO = commentServiceImpl.doSelectList(commentVO);
-		
-		req.setAttribute("commentList", outVO);
-		
-		Gson gson = new Gson();
-		String json = gson.toJson(outVO);
-		return json;
-	}
+	/*
+	 * @RequestMapping(value="comment/doSelectList.do", method = {RequestMethod.GET,
+	 * RequestMethod.POST }) public ModelAndView doSelectList(CommentVO commentVO,
+	 * HttpServletRequest req) { //파라미터로 전달되는 글번호 int num =
+	 * Integer.parseInt(req.getParameter("num")); ModelAndView mav = new
+	 * ModelAndView(); commentVO.setNum(num);
+	 * 
+	 * 
+	 * 
+	 * List<CommentVO> outVO = commentServiceImpl.doSelectList(commentVO);
+	 * LOG.debug("outVO:: " +outVO); req.setAttribute("commentList", outVO);
+	 * 
+	 * mav.addObject("commentList", outVO); mav.setViewName("board/board_detail");
+	 * return mav; }
+	 */
 }

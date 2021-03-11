@@ -8,7 +8,7 @@ public class CommentVO {
 	private String targetId; // 댓글의 대상이 되는 아이디(글작성자)
 	private int refGroup; // 댓글 그룹번호
 	private int commentGroup; //원글에 달린 댓글 내에서의 그룹번호
-	private int deleted; // 댓글이 삭제되었는지 여부
+	private String deleted; // 댓글이 삭제되었는지 여부
 	private String regDt; // 댓글 등록일
 	
 	public CommentVO() {
@@ -16,7 +16,7 @@ public class CommentVO {
 	}
 
 	public CommentVO(int num, String memberId, String content, String targetId, int refGroup, int commentGroup,
-			int deleted, String regDt) {
+			String deleted, String regDt) {
 		super();
 		this.num = num;
 		this.memberId = memberId;
@@ -76,11 +76,11 @@ public class CommentVO {
 		this.commentGroup = commentGroup;
 	}
 
-	public int getDeleted() {
+	public String getDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(int deleted) {
+	public void setDeleted(String deleted) {
 		this.deleted = deleted;
 	}
 
@@ -98,5 +98,6 @@ public class CommentVO {
 				+ ", refGroup=" + refGroup + ", commentGroup=" + commentGroup + ", deleted=" + deleted + ", regDt="
 				+ regDt + ", toString()=" + super.toString() + "]";
 	}
+
 		
 }

@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.myproject.myboard.cmn.PageVO;
+import com.myproject.myboard.comment.CommentServiceImpl;
+import com.myproject.myboard.comment.CommentVO;
 
 @Controller
 public class BoardController {
@@ -27,6 +29,9 @@ public class BoardController {
 	
 	@Autowired
 	BoardServiceImpl boardServiceImpl;
+	@Autowired
+	CommentServiceImpl commentServiceImpl;
+	
 	
 	@RequestMapping(value="board/doInsertView.do", method = RequestMethod.GET)
 	public String doInsertView(BoardVO boardVO,HttpServletRequest req, HttpServletResponse res) {
@@ -47,8 +52,9 @@ public class BoardController {
 		return flag;
 	}
 	
-	@RequestMapping(value="board/doSelectOne.do", method = RequestMethod.GET)
-	public ModelAndView doSelectOne(@RequestParam("seq") int seq,BoardVO boardVO) {
+	@RequestMapping(value="board/doSelectOne.do", method = {RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView doSelectOne(@RequestParam("seq") int seq,BoardVO boardVO,
+									CommentVO commentVO, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView();
 		boardVO.setSeq(seq);
 		
@@ -56,7 +62,13 @@ public class BoardController {
 
 		outVO.setViews(outVO.getViews()+1);
 		int flag = boardServiceImpl.doUpdate(outVO);
-
+		LOG.debug("flag:: " +flag);
+		
+		commentVO.setRefGroup(seq);
+		LOG.debug("seq:: " +seq);
+		List<CommentVO> outVO2 = commentServiceImpl.doSelectList(commentVO);
+		LOG.debug("outVO2:: " +outVO2);
+		mav.addObject("commentList", outVO2);
 		mav.addObject("outVO", outVO);
 		mav.setViewName("board/boardSelectView");
 		

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="hContext" value= "${pageContext.request.contextPath }"></c:set>       
 
 <style>
@@ -75,24 +74,11 @@
 			</form>
 		</div>
 	</div>
-	<form class="comment-insert-form" action="${hContext}/comment/doInsert.do" method="post">
-		<!-- 덧글 그룹 -->
-		<input type="hidden" name="refGroup" vlaue="${outVO.seq }" />
-		<!-- 덧글 대상 -->
-		<input type="hidden" name="targetId" vlaue="${commentList.memberId }" />
-		<input type="hidden" name="commentGroup" vlaue="${commentList.num }" />
-		<textarea name="content">
-			<c:if test="${null == sessionScope.MemberVO.getMemberId()}">
-			로그인이 필요합니다.
-			</c:if>
-		</textarea>	
-		<button type="submit">등록</button>
-	</form>
 	<!-- 댓글 작성끝 -->
 			
 	<!-- 댓글 읽어오기 -->
 	<ul>
-	<c:forEach items="${commentList }" var="tmp" >
+	<c:forEach items="${commentList}" var="tmp" >
 		<c:choose>
 			<c:when test="${tmp.deleted != 'yes' }">
 				<li class = "comment" id="comment${tmp.num }" <c:if test="${tmp.num != tmp.commentGroup }" >style="padding-left:50px;"</c:if> >
@@ -105,13 +91,12 @@
 						<span>${tmp.regDt }</span>
 						<a href="javascript:" class="reply_link" >답글</a> |
 						<c:choose>
-							<!-- 로그인된 아이디와 댓글의 작성자가 같으면 -->
 							<c:when test="${tmp.memberId == sessionScope.MemberVO.getMemberId()} " >
 								<a href="javascript:" class="comment-update-link" >수정</a>&nbsp;&nbsp;
 								<a href="javascript:deleteComment(${tmp.num })" >삭제</a>
 							</c:when>
 							<c:otherwise>
-								<a href="javascript" >신고</a>
+								<a href="javascript:" >신고</a>
 							</c:otherwise>
 						</c:choose>
 					</dt>
@@ -130,7 +115,7 @@
 				</form>
 				<!-- 로그인한 아이디와 댓글의 작성자 같으면 수정폼 출력 -->
 				<c:if test="${tmp.memberId == sessionScope.MemberVO.getMemberId()}" >
-					<form class="comment-update-form" action="${hContext}/comment/doUpdate.do">
+					<form class="comment_update_form" action="${hContext}/comment/doUpdate.do">
 						<input type="hidden" name="num" value="${tmp.num }">
 						<textarea name="content">${tmp.content }</textarea>
 						<button type="submit" >수정</button>
@@ -147,26 +132,3 @@
 	</c:forEach>
 	</ul>
 	<!-- 댓글 읽어오기끝 -->
-	<script type="text/javascript">
-	<!-- 댓글 삭제 -->
-		function deleteComment(num){
-			var isDelete = confirm("확인을 누를시 삭제됩니다.");
-			if(isDelete){
-				$.ajax({
-					url:"${hContext}/comment/doDelete.do",
-					method:"post",
-					data:{"num":num}, 
-					success:function(responseData){
-						if(responseData.isSuccess){
-							var sel="#comment"+num;
-							$(sel).text("삭제된 댓글 입니다.");
-						}
-					}
-				});
-			}
-		}
-	<!-- 댓글 삭제끝 -->
-	
-	
-	
-	</script>

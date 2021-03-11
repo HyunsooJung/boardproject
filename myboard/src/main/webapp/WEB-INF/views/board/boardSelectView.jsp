@@ -19,58 +19,6 @@
 		body{
 			padding-top:200px;
 		}
-		/* 글 내용의 경계선 표시 */
-	.content{
-		border: 1px dotted #cecece;
-	}
-	/* 댓글에 관련된 css */
-	.comments ul{
-		padding: 0;
-		margin: 0;
-		list-style-type: none;
-	}
-	.comments ul li{
-		border-top: 1px solid #888; /* li 의 윗쪽 경계선 */
-	}
-	.comments dt{
-		margin-top: 5px;
-	}
-	.comments dd{
-		margin-left: 26px;
-	}
-	.comments form textarea, .comments form button{
-		float: left;
-	}
-	.comments li{
-		clear: left;
-	}
-	.comments form textarea{
-		width: 85%;
-		height: 100px;
-	}
-	.comments form button{
-		width: 15%;
-		height: 100px;
-	}
-	/* 댓글에 댓글을 다는 폼과 수정폼을 일단 숨긴다. */
-	.comment form{
-		display: none;
-	}
-	.comment{
-		position: relative;
-	}
-	.comment .reply_icon{
-		width: 8px;
-		height: 8px;
-		position: absolute;
-		top: 10px;
-		left: 30px;
-	}
-	.comments .user-img{
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-	}
 	</style>
 <title>게시판</title>
 </head>
@@ -106,119 +54,12 @@
 		</div>
 		</div>
 	</form>
-	<!-- 댓글 작성 -->
-	<div class="comments">
-		<!-- 원글에 댓글을 작성할 수 있는 폼 -->
-		<div class="comment_form">
-			<form action="${hContext}/comment/doInsert.do" method="post">
-			<!-- 댓글의 그룹번호는 원글의 글번호가 된다 -->
-				<input type="hidden" name="refGroup" value="${outVO.seq }" />
-			<!-- 댓글의 대상자는 원글의 작성자가 된다. -->
-				<input type="hidden" name="targetId" value="${outVO.regId }" />
-				<textarea name="content">
-					<c:if test="${null == sessionScope.MemberVO.getMemberId()}">
-					로그인이 필요합니다.
-					</c:if>
-				</textarea>	
-				<button type="submit">등록</button>
-			</form>
-		</div>
-	</div>
-	<form class="comment-insert-form" action="${hContext}/comment/doInsert.do" method="post">
-		<!-- 덧글 그룹 -->
-		<input type="hidden" name="refGroup" vlaue="${outVO.seq }" />
-		<!-- 덧글 대상 -->
-		<input type="hidden" name="targetId" vlaue="${commentList.memberId }" />
-		<input type="hidden" name="commentGroup" vlaue="${commentList.num }" />
-		<textarea name="content">
-			<c:if test="${null == sessionScope.MemberVO.getMemberId()}">
-			로그인이 필요합니다.
-			</c:if>
-		</textarea>	
-		<button type="submit">등록</button>
-	</form>
-	<!-- 댓글 작성끝 -->
-			
-	<!-- 댓글 읽어오기 -->
-	<ul>
-	<c:forEach items="${commentList }" var="tmp" >
-		<c:choose>
-			<c:when test="${tmp.deleted != 'yes' }">
-				<li class = "comment" id="comment${tmp.num }" <c:if test="${tmp.num != tmp.commentGroup }" >style="padding-left:50px;"</c:if> >
-				<dl>
-					<dt>
-						<span>${tmp.memberId }</span>
-						<c:if test="${tmp.num != tmp.commentGroup }" >
-							to <strong>${tmp.targetId }</strong>
-						</c:if>
-						<span>${tmp.regDt }</span>
-						<a href="javascript:" class="reply_link" >답글</a> |
-						<c:choose>
-							<!-- 로그인된 아이디와 댓글의 작성자가 같으면 -->
-							<c:when test="${tmp.memberId == sessionScope.MemberVO.getMemberId()} " >
-								<a href="javascript:" class="comment-update-link" >수정</a>&nbsp;&nbsp;
-								<a href="javascript:deleteComment(${tmp.num })" >삭제</a>
-							</c:when>
-							<c:otherwise>
-								<a href="javascript" >신고</a>
-							</c:otherwise>
-						</c:choose>
-					</dt>
-					<dd>
-						<pre>${tmp.content }</pre>
-					</dd>
-				</dl>
-				<form action="${hContext}/comment/doInsert.do" method="post" class= "comment-insert-form">
-					<!-- 대댓글 그룹 -->
-					<input type="hidden" name="refGroup" vlaue="${outVO.seq }" >
-					<!-- 대댓글 대상 -->
-					<input type="hidden" name="targetId" value="${tmp.memberId }" >
-					<input type="hidden" name="commentGroup" value="${tmp.commentGroup }" >
-					<textarea name="content"><c:if test="${null == sessionScope.MemberVO.getMemberId()}" >로그인이 필요합니다.</c:if></textarea>
-					<button type="submit" >등록</button>
-				</form>
-				<!-- 로그인한 아이디와 댓글의 작성자 같으면 수정폼 출력 -->
-				<c:if test="${tmp.memberId == sessionScope.MemberVO.getMemberId()}" >
-					<form class="comment-update-form" action="${hContext}/comment/doUpdate.do">
-						<input type="hidden" name="num" value="${tmp.num }">
-						<textarea name="content">${tmp.content }</textarea>
-						<button type="submit" >수정</button>
-					</form>
-				</c:if>
-				</li>
-			</c:when>
-			<c:otherwise>
-			<li <c:if test="${tmp.num != tmp.commentGroup }" >style="padding-left:50px;"</c:if> >
-				삭제된 댓글입니다.
-			</li>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
-	</ul>
+	<%@ include file="/WEB-INF/views/board/board_detail.jsp" %>
 		<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="${hContext}/resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-	
-	<!-- 댓글 삭제 -->
-	function deleteComment(num){
-		var isDelete = confirm("확인을 누를시 삭제됩니다.");
-		if(isDelete){
-			$.ajax({
-				url:"${hContext}/comment/doDelete.do",
-				method:"post",
-				data:{"num":num}, 
-				success:function(responseData){
-					if(responseData.isSuccess){
-						var sel="#comment"+num;
-						$(sel).text("삭제된 댓글 입니다.");
-					}
-				}
-			});
-		}
-	}
-<!-- 댓글 삭제끝 -->
-	
+
 	//삭제 이벤트
 	$("#delete_btn").on("click",function(){
 		if(${sessionScope.MemberVO.getAuth()>=3}){
@@ -266,6 +107,71 @@
 	$("#list_btn").on("click",function(){
 		window.location.href="${hContext}/board/doSelectList.do";
 	});
+	
+	//댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
+	$(".comment_update_form").on("submit", function(){
+		// "private/comment_update.do"
+		var url=$(this).attr("action");
+		//폼에 작성된 내용을 query 문자열로 읽어온다.
+		// num=댓글번호&content=댓글내용
+		var data=$(this).serialize();
+		//이벤트가 일어난 폼을 선택해서 변수에 담아 놓는다.
+		var $this=$(this);
+		$.ajax({
+			url:url,
+			method:"post",
+			data:data,
+			success:function(responseData){
+				// responseData : {isSuccess:true}
+				if(responseData.isSuccess){
+					//폼을 안보이게 한다 
+					$this.slideUp(200);
+					//폼에 입력한 내용 읽어오기
+					var content=$this.find("textarea").val();
+					//pre 요소에 수정 반영하기 
+					$this.parent().find("pre").text(content);
+				}
+			}
+		});
+		//폼 제출 막기 
+		return false;
+	});
+	
+	<!-- 비로그인시 로그인창으로 이동하게 -->
+	$(".comments form textarea").on("click", function(){
+		var login = ${null != sessionScope.MemberVO.getMemberId()};
+		if(login == false){
+			var move = confirm("로그인페이지로 이동하시겠습니까?");
+			if(move){
+				window.location.href="${hContext}/member/loginPage.do";
+			}
+		}
+		
+	});
+	
+	//수정 링크 눌렀을시 수정폼 보이게 이벤트
+	$(".commentUpdate").click(function(){
+		$(this).parent().parent().parent().find(".comment_update_form").slideToggle(200);	
+	});
+	
+	<!-- 댓글 삭제 -->
+	function deleteComment(num){
+		var isDelete = confirm("확인을 누를시 삭제됩니다.");
+		if(isDelete){
+			$.ajax({
+				url:"${hContext}/comment/doDelete.do",
+				method:"post",
+				data:{"num":num}, 
+				success:function(responseData){
+					if(responseData.isSuccess){
+						var sel="#comment"+num;
+						$(sel).text("삭제된 댓글 입니다.");
+					}
+				}
+			});
+		}
+	}
+<!-- 댓글 삭제끝 -->
 	</script>
 </body>
 </html>
