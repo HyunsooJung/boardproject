@@ -182,7 +182,7 @@
 				      
 		    },		       
 		    error:function(xhr,status,error){
-		     alert("error:"+error);
+		     alert("권한부여를 체크해주세요.");
 		    },
 		    complete:function(data){
 		    
@@ -223,7 +223,7 @@
 				location.reload();
 			},
 			error:function(xhr,status,error){
-				alert("error:"+error);
+				alert("유저를 선택해주세요.");
 			},
 			complete:function(data){
 				
