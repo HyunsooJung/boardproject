@@ -200,30 +200,6 @@
 		$(this).parent().parent().parent().find(".comment-insert-form").slideToggle(200);	
 	});
 	
-	/* //댓글 등록 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
-	$(".comment-insert-form").on("submit", function(){
-		
-		var url=$(this).attr("action");
-		var data=$(this).serialize();
-		var $this=$(this);
-		$.ajax({
-			url:url,
-			method:"post",
-			data:data,
-			success:function(data){
-				
-					$this.slideUp(200);
-					//폼에 입력한 내용 읽어오기
-					var content=$this.find("textarea").val();
-					
-					$this.parent().find("pre").text(content);
-				
-			}
-		});
-		//폼 제출 막기 
-		return false;
-	}); */
-	
 	
 	<!-- 댓글 삭제 -->
 	function deleteComment(num){

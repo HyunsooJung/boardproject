@@ -97,6 +97,26 @@ public class MemberController {
 	}
 	
 	/**
+	 * 유저의 모든 게시물 삭제
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value="member/boardAllDelete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int boardAllDelete(HttpServletRequest req) {
+		
+		String memberId[] = req.getParameterValues("memberId");
+		BoardVO boardVO = new BoardVO();
+		for(int i=0; i<memberId.length; i++) {
+			boardVO.setRegId(memberId[i]);
+			boardServiceImpl.allDelete(boardVO);
+		}
+		
+		
+		return 0;
+	}
+	
+	/**
 	 * 관리자 페이지
 	 * @return
 	 */

@@ -63,9 +63,11 @@
 		</form>
 		<!-- 검색 끝 -->
 		
+		<input type='checkbox'name='allBoard' value="${list.memberId }" onclick='selectAll(this)'/> <b>전체선택</b>
 		<table border="1">
 			<thead>
 			<tr>
+				<th>선택</th>
 				<th>회원아이디</th>
 				<th>회원이름</th>
 				<th>권한</th>
@@ -76,6 +78,9 @@
 			<tbody>
 			<c:forEach items="${memberVO}" var="list">
 				<tr>
+					<td>
+						<input type="checkbox" name="allBoard" value= "${list.memberId }" >
+					</td>
 					<td>${list.memberId }</td>
 					<td>${list.name }</td>
 					<td>
@@ -107,7 +112,7 @@
 			</c:forEach>
 			</tbody>
 		</table>
-		
+		<input type="button" value="모든게시물 삭제" style="float: left;" id="board_delete_btn">
 		<input type="button" value="권한 수정" style="float: right;" id="admin_btn">
 		
 		<div style="display: block; text-align: center;" >
@@ -187,6 +192,44 @@
 		
 	});
 	
+	//전체선택
+	function selectAll(selectAll) {
+		const checkboxes = document.getElementsByName('allBoard');
+		
+		checkboxes.forEach((checkbox) => {
+			checkbox.checked = selectAll.checked;
+		})
+	}
+	
+	//선택된 유저의 모든 게시물 삭제 이벤트
+	$("#board_delete_btn").on("click",function(){
+		if(false==confirm("게시물을 삭제하시겠습니까?"))return;
+		var idArr = [];
+		
+		//체크박스 이벤트
+		$('input:checkbox[name=allBoard]:checked').each(function(){
+			idArr.push(this.value);
+		});
+		$.ajax({
+			type:"POST",
+			url:"${hContext}/member/boardAllDelete.do",
+			dataType:"html",
+			traditional:true,
+			data:{
+				"memberId" :idArr
+			},
+			success:function(data){
+				alert("해당유저의 모든 게시물을 삭제했습니다.");
+				loaction.reload();
+			},
+			error:function(xhr,status,error){
+				alert("error:"+error);
+			},
+			complete:function(data){
+				
+			}
+		});
+	});
 	
 	</script>	
 </body>
