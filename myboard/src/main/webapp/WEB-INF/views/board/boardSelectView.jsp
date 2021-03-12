@@ -168,7 +168,6 @@
 	
 	//댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
 	$(".comment_update_form").on("submit", function(){
-		// "private/comment_update.do"
 		var url=$(this).attr("action");
 		//폼에 작성된 내용을 query 문자열로 읽어온다.
 		// num=댓글번호&content=댓글내용
