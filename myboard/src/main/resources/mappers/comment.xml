@@ -5,7 +5,8 @@
 	<!-- 댓글 등록 -->
 	<insert id="doInsert" parameterType="CommentVO">
 	INSERT INTO test.comment
-			(MEMBER_ID, 
+			(
+			 MEMBER_ID, 
 			 CONTENT, 
 			 TARGET_ID, 
 			 REF_GROUP,
@@ -56,6 +57,6 @@
 
 	<!-- comment_group 번호 매기기 -->
 	<select id="getSequence" resultType="int">
-	select nextval(comment_sq)
+	select nextval(comment_seq)
 	</select>
 </mapper>

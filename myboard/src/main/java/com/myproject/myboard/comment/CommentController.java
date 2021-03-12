@@ -47,6 +47,10 @@ public class CommentController {
 		//댓글 내에서의 그룹번호
 		String commentGroup = req.getParameter("commentGroup");
 		//저장할 댓글의 기본키 값
+		LOG.debug("refGroup:"+refGroup);
+		LOG.debug("targetId:"+targetId);
+		LOG.debug("content:"+content);
+		LOG.debug("commentGroup:"+commentGroup);
 		int seq = commentServiceImpl.getSequence();
 		commentVO.setMemberId(memberId);
 		commentVO.setTargetId(targetId);
@@ -58,13 +62,8 @@ public class CommentController {
 		}
 		else {
 			commentVO.setCommentGroup(Integer.parseInt(commentGroup));
-		}
-		LOG.debug("memberVO1:"+memberVO);		
+		}	
 		int flag = commentServiceImpl.doInsert(commentVO);
-		//List<CommentVO> outVO = commentServiceImpl.doSelectList(commentVO);
-		LOG.debug("memberVO2:"+memberVO);
-		//LOG.debug("outVO:"+outVO);
-		//req.setAttribute("commentList", outVO);
 		return new ModelAndView("redirect:/board/doSelectOne.do?seq="+refGroup);
 	}
 
@@ -111,24 +110,4 @@ public class CommentController {
 		return json;
 	}
 
-	/**
-	 * 댓글 리스트
-	 * @param commentVO
-	 * @return
-	 */
-	/*
-	 * @RequestMapping(value="comment/doSelectList.do", method = {RequestMethod.GET,
-	 * RequestMethod.POST }) public ModelAndView doSelectList(CommentVO commentVO,
-	 * HttpServletRequest req) { //파라미터로 전달되는 글번호 int num =
-	 * Integer.parseInt(req.getParameter("num")); ModelAndView mav = new
-	 * ModelAndView(); commentVO.setNum(num);
-	 * 
-	 * 
-	 * 
-	 * List<CommentVO> outVO = commentServiceImpl.doSelectList(commentVO);
-	 * LOG.debug("outVO:: " +outVO); req.setAttribute("commentList", outVO);
-	 * 
-	 * mav.addObject("commentList", outVO); mav.setViewName("board/board_detail");
-	 * return mav; }
-	 */
 }

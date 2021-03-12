@@ -46,5 +46,5 @@
 		</div>
 	</div>
 </nav>
-<script src="${hContext}/resources/js/bootstrap.min.js"></script>
+
 

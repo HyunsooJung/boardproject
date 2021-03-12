@@ -19,6 +19,46 @@
 		body{
 			padding-top:200px;
 		}
+		/* 글 내용의 경계선 표시 */
+	.content{
+		border: 1px dotted #cecece;
+	}
+	/* 댓글에 관련된 css */
+	.comments ul{
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+	}
+	.comments ul li{
+		border-top: 1px solid #888; /* li 의 윗쪽 경계선 */
+	}
+	.comments dt{
+		margin-top: 5px;
+	}
+	.comments dd{
+		margin-left: 26px;
+	}
+	/* .comments form textarea, .comments form button{
+		float: left;
+	} */
+	.comments li{
+		clear: left;
+	}
+	.comments form textarea{
+		width: 85%;
+		height: 100px;
+	}
+	.comments form button{
+		width: 5%;
+		height: 80px;
+	}
+	/* 댓글에 댓글을 다는 폼과 수정폼을 일단 숨긴다. */
+	.comment form{
+		display: none;
+	}
+	.comment{
+		position: relative;
+	}
 	</style>
 <title>게시판</title>
 </head>
@@ -108,6 +148,24 @@
 		window.location.href="${hContext}/board/doSelectList.do";
 	});
 	
+	
+	<!-- 비로그인시 로그인창으로 이동하게 -->
+	$(".comments form textarea").on("click", function(){
+		var login = ${null != sessionScope.MemberVO.getMemberId()};
+		if(login == false){
+			var move = confirm("로그인페이지로 이동하시겠습니까?");
+			if(move){
+				window.location.href="${hContext}/member/loginPage.do";
+			}
+		}
+		
+	});
+	
+	//수정 링크 눌렀을시 수정폼 보이게 이벤트
+	$(".comment-update-link").click(function(){
+		$(this).parent().parent().parent().find(".comment_update_form").slideToggle(200);	
+	});
+	
 	//댓글 수정 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
 	$(".comment_update_form").on("submit", function(){
 		// "private/comment_update.do"
@@ -137,22 +195,35 @@
 		return false;
 	});
 	
-	<!-- 비로그인시 로그인창으로 이동하게 -->
-	$(".comments form textarea").on("click", function(){
-		var login = ${null != sessionScope.MemberVO.getMemberId()};
-		if(login == false){
-			var move = confirm("로그인페이지로 이동하시겠습니까?");
-			if(move){
-				window.location.href="${hContext}/member/loginPage.do";
-			}
-		}
-		
+	//답글 눌렀을시 답글폼 보이게 이벤트
+	$(".reply_link").click(function(){
+		$(this).parent().parent().parent().find(".comment-insert-form").slideToggle(200);	
 	});
 	
-	//수정 링크 눌렀을시 수정폼 보이게 이벤트
-	$(".commentUpdate").click(function(){
-		$(this).parent().parent().parent().find(".comment_update_form").slideToggle(200);	
-	});
+	/* //댓글 등록 폼에 submit 이벤트가 일어났을때 호출되는 함수 등록
+	$(".comment-insert-form").on("submit", function(){
+		
+		var url=$(this).attr("action");
+		var data=$(this).serialize();
+		var $this=$(this);
+		$.ajax({
+			url:url,
+			method:"post",
+			data:data,
+			success:function(data){
+				
+					$this.slideUp(200);
+					//폼에 입력한 내용 읽어오기
+					var content=$this.find("textarea").val();
+					
+					$this.parent().find("pre").text(content);
+				
+			}
+		});
+		//폼 제출 막기 
+		return false;
+	}); */
+	
 	
 	<!-- 댓글 삭제 -->
 	function deleteComment(num){
