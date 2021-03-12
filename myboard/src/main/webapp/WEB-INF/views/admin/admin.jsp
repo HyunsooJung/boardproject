@@ -220,7 +220,7 @@
 			},
 			success:function(data){
 				alert("해당유저의 모든 게시물을 삭제했습니다.");
-				loaction.reload();
+				location.reload();
 			},
 			error:function(xhr,status,error){
 				alert("error:"+error);

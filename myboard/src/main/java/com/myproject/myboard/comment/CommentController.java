@@ -35,7 +35,6 @@ public class CommentController {
 	public ModelAndView doInsert(CommentVO commentVO, HttpServletRequest req) {
 		
 		MemberVO memberVO = (MemberVO) req.getSession().getAttribute("MemberVO");
-		LOG.debug("memberVO23:"+memberVO);
 		//댓글 작성자
 		String memberId = memberVO.getMemberId();		
 		//댓글의 그룹번호
@@ -47,10 +46,6 @@ public class CommentController {
 		//댓글 내에서의 그룹번호
 		String commentGroup = req.getParameter("commentGroup");
 		//저장할 댓글의 기본키 값
-		LOG.debug("refGroup:"+refGroup);
-		LOG.debug("targetId:"+targetId);
-		LOG.debug("content:"+content);
-		LOG.debug("commentGroup:"+commentGroup);
 		int seq = commentServiceImpl.getSequence();
 		commentVO.setMemberId(memberId);
 		commentVO.setTargetId(targetId);

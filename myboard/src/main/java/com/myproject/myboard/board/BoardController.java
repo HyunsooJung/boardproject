@@ -62,12 +62,10 @@ public class BoardController {
 
 		outVO.setViews(outVO.getViews()+1);
 		int flag = boardServiceImpl.doUpdate(outVO);
-		LOG.debug("flag:: " +flag);
 		
 		commentVO.setRefGroup(seq);
-		LOG.debug("seq:: " +seq);
 		List<CommentVO> outVO2 = commentServiceImpl.doSelectList(commentVO);
-		LOG.debug("outVO2:: " +outVO2);
+
 		mav.addObject("commentList", outVO2);
 		mav.addObject("outVO", outVO);
 		mav.setViewName("board/boardSelectView");
