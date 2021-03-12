@@ -51,7 +51,7 @@
 					</dd>
 				</dl>
 				<form action="${hContext}/comment/doInsert.do" method="post" class= "comment-insert-form">
-					<input type="hidden" name="refGroup" vlaue="${outVO.seq }" />	
+					<input type="hidden" name="refGroup" value="${outVO.seq }" />	
 					<input type="hidden" name="targetId" value="${tmp.memberId }" />
 					<input type="hidden" name="commentGroup" value="${tmp.commentGroup}" />
 					<textarea name="content"><c:if test="${null == sessionScope.MemberVO.getMemberId()}" >로그인이 필요합니다.</c:if></textarea>
